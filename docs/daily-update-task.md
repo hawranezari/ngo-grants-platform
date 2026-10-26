@@ -2,6 +2,9 @@
 
 Schedule: every day 07:33 Europe/Copenhagen. Scope: `opps` collection only.
 
+## Organisation policy
+- No Israeli funders, funders of work in Israel, or programmes set up to support Israel or joint Israeli-Palestinian programmes. Existing matches are deleted.
+
 ## Trust rules
 - Add only opportunities found on the funder's own site or an official UN/EU/government page. Listing sites
   (fundsforNGOs, opportunitydesk, developmentaid, triple-funds, jobs.ps…) are leads only.
