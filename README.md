@@ -1,4 +1,4 @@
-# Grants & Supplies Platform — medical & humanitarian NGO
+# Al Risaleh Foundation — Grants & Supplies Platform
 
 A single-page web app for a UK-registered medical and humanitarian NGO to find, apply for and track
 **institutional and government funding** worldwide, with a focus on **Gaza/Palestine, Lebanon and Iraq**
