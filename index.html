@@ -315,9 +315,16 @@ function vGrants(){
    :f.mode==='country'?(()=>{const G={};rows.forEach(o=>{(G[o.fc||'Other']=G[o.fc||'Other']||[]).push(o)});return Object.keys(G).sort((a,b)=>G[b].length-G[a].length||a.localeCompare(b)).map(c=>`<h3 style="margin:20px 0 10px;font-size:18px">${flag(c)} ${esc(c)} <span class="note">· ${G[c].length} opportunit${G[c].length>1?'ies':'y'}</span></h3>${G[c].map(oppCard).join('')}`).join('')})()
    :rows.map(oppCard).join('')}`;
 }
+function timing(o){const st=state(o),n=o.deadline?days(o.deadline):null;
+  if(st==='open')return`📅 <b>Deadline ${fmtD(o.deadline)}</b> · ${n===0?'closes today':n+' days left'}`;
+  if(st==='soon')return`📅 <b>Opens ${fmtD(o.opens)}</b>${o.deadline?' · deadline '+fmtD(o.deadline):''}`;
+  if(st==='rolling')return`📅 <b>No fixed deadline</b> · ${o.deadline?'open until '+fmtD(o.deadline):'apply or approach any time'}`;
+  if(st==='expected')return`📅 <b>No open call right now</b> · next round expected${o.deadline?' (last deadline '+fmtD(o.deadline)+')':''}`;
+  if(st==='paused')return`📅 <b>Paused</b> · funds allocated for now`;
+  return`📅 <b>Closed</b>${o.deadline?' · '+fmtD(o.deadline):''}`}
 function meRow(o){const a=appFor(o.id),st=state(o),ap=o.applyUrl||o.url;
   return`<div class="row" style="grid-template-columns:110px 1fr auto"><b style="font-size:12px">${st==='open'?'Due '+fmtS(o.deadline):st==='rolling'?'Rolling':st==='soon'?'Opens '+fmtS(o.opens):st==='expected'?'Expected':esc(st)}</b>
-   <div>${esc(o.title)}<div class="note" style="margin:0">${flag(o.fc)} ${esc(o.funder)} · 💰 ${grantSize(o)}</div><div style="margin-top:3px">${ukTag(o)}</div></div>
+   <div>${esc(o.title)}<div class="note" style="margin:0">${flag(o.fc)} ${esc(o.funder)} · 💰 ${grantSize(o)}</div><div class="note" style="margin:2px 0 0">${timing(o)}</div><div style="margin-top:3px">${ukTag(o)}</div></div>
    <div style="display:flex;flex-direction:column;gap:4px"><a class="btn sm pri" href="${esc(ap)}" target="_blank" rel="noopener">Apply ↗</a>${a?`<button class="btn sm" data-act="openApp" data-id="${a.id}">Open</button>`:`<button class="btn sm" data-act="startApp" data-id="${esc(o.id)}">＋ Track</button>`}</div></div>`}
 const CMP=[
  ['Sanctions & counter-terrorism',[
@@ -409,7 +416,7 @@ let dls=null;function showCSV(csv,name,label){
   $('#box').innerHTML=`<h2>Export: ${esc(label)}</h2><p class="note">Download the file (opens in Excel or Google Sheets), or copy the text below.</p><div style="display:flex;gap:8px;margin:8px 0">${dls?`<button class="btn pri" data-act="dlCSV" data-n="${name}">⬇ Download ${name}</button>`:''}<button class="btn" data-act="cpCSV">⧉ Copy</button><button class="btn" data-act="close">Close</button></div><textarea id="csvTxt" rows="10" style="width:100%;font-family:monospace;font-size:12px" readonly>${esc(csv)}</textarea>`;$('#modal').classList.add('on')}
 function oppCard(o){const a=appFor(o.id),ap=o.applyUrl||o.url;return`<article class="opp">${badge(o)}
    <div><h3>${esc(o.title)}</h3><div class="note" style="margin-top:2px">${flag(o.fc)} ${esc(o.funder)}${isME(o)?' <span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">📍 Middle East</span>':''}</div>
-    <div class="gs">💰 Grant size: ${grantSize(o)}</div>
+    <div class="gs">💰 Grant size: ${grantSize(o)}</div><div class="note" style="margin:3px 0 0">${timing(o)}${o.checked?` · <span title="Last time this entry was checked">checked ${fmtS(o.checked)}</span>`:''}</div>
     <dl class="facts"><dt>Where</dt><dd>${esc(o.where)}</dd><dt>Who can apply</dt><dd>${esc(o.eligibility)}</dd></dl>
     <div style="margin-top:7px">${ukTag(o)}<span class="tag">${esc(o.type)}</span>${(o.focus||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>${trustTags(o)}
     ${o.applyHow?`<div class="how"><b>How to apply:</b> ${esc(o.applyHow)}</div>`:''}
