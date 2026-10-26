@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grants & Supplies Platform: medical & humanitarian NGO</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#14211f;--muted:#5d6b69;--line:#e3e8e6;--bg:#f6f8f7;--brand:#0b6e69;--brand2:#0e8a83;--soft:#e3f2f0;--red:#c9372c;--red-soft:#fdecea;--amber:#b7791f;--amber-soft:#fbf3e2;--blue:#2b5fa8;--blue-soft:#e8effa;--grey:#eef1f0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.25}
+h2{font-size:22px}h3{font-size:16px}h4{font-size:14px}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:11px 20px;background:#fff;border-bottom:1px solid var(--line)}
+.logo{display:flex;gap:9px;align-items:center;font-weight:700;font-size:16px}
+.sync{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.shell{display:flex;min-height:calc(100vh - 55px)}
+nav{width:220px;flex:none;background:#fff;border-right:1px solid var(--line);padding:14px 10px}
+nav button{display:flex;gap:9px;align-items:center;width:100%;border:0;background:none;text-align:left;padding:9px 11px;border-radius:9px;cursor:pointer;color:var(--muted);font-weight:500}
+nav button:hover{background:var(--bg)}
+nav button.on{background:var(--soft);color:var(--brand);font-weight:600}
+nav .sep{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#98a5a3;padding:14px 11px 5px}
+nav .cnt{margin-left:auto;font-size:11.5px;background:var(--grey);border-radius:99px;padding:0 7px}
+main{flex:1;min-width:0;padding:24px 28px 70px}
+@media(max-width:820px){nav{display:none}main{padding:16px}}
+.mnav{display:none}
+@media(max-width:820px){.mnav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line)}.mnav button{flex:none;border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font-size:13px}.mnav button.on{background:var(--ink);color:#fff}}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.head p{margin:4px 0 0;color:var(--muted);max-width:760px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1000px){.g4,.g3{grid-template-columns:1fr 1fr}}@media(max-width:700px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.kpi .l{font-size:12.5px;color:var(--muted)}.kpi .n{font-size:26px;font-weight:700;margin-top:2px}.kpi .s{font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 12px;cursor:pointer;font-weight:600;font-size:13.5px;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:#c4cecc}.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}.btn.pri:hover{background:var(--brand2)}
+.btn.sm{padding:4px 9px;font-size:12.5px}.btn.ghost{border-color:transparent;background:none}
+.btn.ai{background:#f3effc;border-color:#ddd2f7;color:#5b3fa8}
+input[type=text],input[type=number],input[type=date],input[type=url],select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:#fff}
+textarea{resize:vertical;min-height:90px;line-height:1.5}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--soft);border-color:var(--brand)}
+label.f{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bar input[type=text]{flex:1;min-width:180px;width:auto}.bar select{width:auto}
+.tog{display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}.tog input{accent-color:var(--brand)}
+table{width:100%;border-collapse:collapse}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;font-weight:600;padding:8px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.click{cursor:pointer}tr.click:hover td{background:#fafcfb}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--grey);color:var(--muted);white-space:nowrap;margin:0 3px 3px 0}
+.tag.g{background:var(--soft);color:var(--brand)}.tag.a{background:var(--amber-soft);color:var(--amber)}.tag.r{background:var(--red-soft);color:var(--red)}.tag.b{background:var(--blue-soft);color:var(--blue)}
+.pbar{height:7px;background:var(--grey);border-radius:9px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--brand)}
+.opp{display:grid;grid-template-columns:112px 1fr 200px;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:9px}
+@media(max-width:860px){.opp{grid-template-columns:1fr}}
+.dl{border-radius:11px;padding:9px;text-align:center;background:var(--grey);font-size:12px}.dl b{display:block;font-size:14px}
+.dl.red{background:var(--red-soft);color:var(--red)}.dl.amber{background:var(--amber-soft);color:var(--amber)}.dl.green{background:var(--soft);color:var(--brand)}.dl.blue{background:var(--blue-soft);color:var(--blue)}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px;margin-top:8px}.facts dt{color:var(--muted)}.facts dd{margin:0}
+.note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.gs{margin-top:8px;background:var(--soft);border-radius:9px;padding:7px 11px;font-size:14px}.gs b{font-size:15px}
+.how{font-size:12.5px;margin-top:6px}
+.uk{font-size:12.5px;margin-top:7px;background:var(--grey);border-radius:8px;padding:5px 9px}
+.kanban{display:grid;grid-template-columns:repeat(6,minmax(170px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
+.col{background:#eef2f1;border-radius:12px;padding:9px;min-height:110px}
+.col h4{font-size:12.5px;margin:2px 4px 9px;display:flex;justify-content:space-between;color:var(--muted)}
+.kc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:7px;cursor:pointer;font-size:13px}
+.kc:hover{border-color:var(--brand)}.kc b{display:block;font-size:13.3px;line-height:1.3}
+.tabs2{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:14px 0}
+.tabs2 button{border:0;background:none;padding:8px 12px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs2 button.on{color:var(--brand);border-color:var(--brand)}
+.ms{display:grid;grid-template-columns:24px 1fr 140px 130px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.ms.done .nm{text-decoration:line-through;color:var(--muted)}.ms.late .dt{color:var(--red);font-weight:600}
+.ms input[type=checkbox],.chk input{accent-color:var(--brand);width:17px;height:17px}
+.chk{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.sec{margin-bottom:16px}.sec .sh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:5px}
+.wc{font-size:11.5px;color:var(--muted)}
+.back{border:0;background:none;color:var(--brand);font-weight:600;cursor:pointer;padding:0;margin-bottom:8px}
+.agenda .row{display:grid;grid-template-columns:96px 1fr auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;align-items:center}
+.gantt svg{display:block;width:100%;height:auto}
+.modal{position:fixed;inset:0;background:rgba(10,25,23,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.on{display:flex}
+.box{background:#fff;border-radius:16px;max-width:600px;width:100%;padding:20px;max-height:92vh;overflow:auto}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 15px;border-radius:10px;font-size:13.5px;opacity:0;transition:.25s;pointer-events:none;z-index:60}.toast.on{opacity:1}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--muted)}
+.banner{background:var(--amber-soft);color:#6b4a0c;border-radius:11px;padding:9px 13px;font-size:13px;margin-bottom:14px}
+.src{background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px}
+.src h4{margin:6px 0 4px;font-size:14.5px}
+.docrow{display:grid;grid-template-columns:1fr 130px 130px 1fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+@media(max-width:860px){.docrow{grid-template-columns:1fr 1fr}.ms{grid-template-columns:24px 1fr}}
+.st-ready{color:var(--brand);font-weight:600}.st-update{color:var(--amber);font-weight:600}.st-missing{color:var(--red);font-weight:600}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><svg width="28" height="28" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#0b6e69"/><path d="M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z" fill="#fff"/></svg><span id="orgTop">Grants & Supplies</span></div>
+  <span class="sync" id="sync">Connecting…</span>
+</header>
+<div class="mnav" id="mnav"></div>
+<div class="shell">
+<nav id="nav"></nav>
+<main id="main"></main>
+</div>
+<div class="modal" id="modal"><div class="box" id="box"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ================= helpers =================
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TODAY=new Date();TODAY.setHours(0,0,0,0);
+const iso=d=>{const x=new Date(d);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+const todayISO=iso(TODAY);
+const days=d=>Math.round((new Date(d+'T00:00:00')-TODAY)/864e5);
+const addDays=(d,n)=>{const x=new Date(d+'T00:00:00');x.setDate(x.getDate()+n);return iso(x)};
+const fmtD=d=>d?new Date(d+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'}):'—';
+const fmtS=d=>d?new Date(d+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short'}):'—';
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2300)}
+const RATES={GBP:1,EUR:.86,USD:.79,DKK:.115,CHF:.9,SEK:.075,NOK:.073,CAD:.57,AUD:.51,JPY:.0052,CZK:.034};// indicative, GBP per unit
+const CURS=Object.keys(RATES);
+const gbp=(v,c)=>(+v||0)*(RATES[c]||1);
+const money=(v,c='GBP')=>{try{return new Intl.NumberFormat(undefined,{style:'currency',currency:c,maximumFractionDigits:0}).format(+v||0)}catch(e){return c+' '+Math.round(+v||0)}};
+const short=v=>v>=1e6?'£'+(v/1e6).toFixed(1)+'M':v>=1e3?'£'+Math.round(v/1e3)+'k':'£'+Math.round(v);
+
+// ================= reference data =================
+const STAGES=['Prospect','Go / no-go','Drafting','Internal review','Submitted','Clarifications','Awarded','Rejected','Withdrawn'];
+const ACTIVE=['Prospect','Go / no-go','Drafting','Internal review'];
+const KANBAN=['Prospect','Go / no-go','Drafting','Internal review','Submitted','Clarifications'];
+const MILESTONES=[['Go / no-go decision',-42],['Partners, budget holder & lead writer confirmed',-35],['Concept, logframe & budget envelope agreed',-28],['First full draft',-21],['Detailed budget finalised',-14],['Internal review: programme, finance, safeguarding, medical',-10],['Annexes & due-diligence documents collected',-5],['Sign-off by director / trustee',-3],['Submit on funder portal (aim 1 day early)',-1]];
+const APP_DOCS=['Registration certificate (Charity Commission / Companies House)','Governing document','Audited accounts (last 2–3 years)','Latest annual report','Organisational budget (current year)','Trustee / board list','Safeguarding & PSEA policy','Anti-fraud, bribery & corruption policy','Counter-terrorism & sanctions screening policy','Logframe / results framework (donor template)','Detailed budget (donor template)','Budget narrative','Workplan / Gantt chart','CVs of key staff','Letters of support (partners / Ministry of Health)','Risk register','Medical supply & pharmaceutical management plan'];
+const SECTIONS=[['summary','Executive summary','150–200 words. What, where, for whom, how much, expected results.'],['need','Problem statement & needs analysis','250–350 words. Context, health needs, gaps, evidence, why now.'],['objectives','Goal, outcomes & outputs','150–250 words. One goal, 2–3 outcomes, numbered outputs.'],['activities','Activities & methodology','300–400 words. What will be done, by whom, how; medical services, supplies, staffing, coordination with clusters/MoH.'],['meal','Monitoring, evaluation, accountability & learning','200–300 words incl. 5–8 indicators with baseline/target placeholders and a feedback & complaints mechanism.'],['budget','Budget narrative','200–300 words explaining staff, medical supplies & equipment, logistics, partner costs, indirect costs and value for money.'],['risk','Risks, safeguarding & compliance','200–300 words: security, access, supply chain, safeguarding/PSEA, do-no-harm, counter-terrorism & sanctions compliance.'],['sustain','Sustainability, localisation & exit','150–250 words: local partners, MoH integration, capacity building, exit strategy.'],['capacity','Organisational capacity & track record','150–250 words: experience, presence, systems, past results.']];
+const DOC_LIB=[
+ ['Legal',['Charity Commission registration','Companies House certificate (if incorporated)','Governing document (constitution / articles)','Trustee list & short bios','Registrations in each country of operation','Bank account confirmation letter','Fundraising Regulator registration']],
+ ['Finance',['Audited accounts: last 3 years','Annual report & accounts filed','Current-year organisational budget','Latest management accounts','Finance manual','Procurement policy & thresholds','Indirect cost / overhead rate justification']],
+ ['Policies',['Safeguarding & PSEA policy','Anti-fraud, bribery & corruption policy','Counter-terrorism & sanctions screening policy','Whistleblowing policy','Conflict of interest policy','Data protection (UK GDPR) policy','Staff code of conduct','Security management plan & duty of care','Complaints & feedback mechanism','Environmental policy','Pharmaceutical & medical supply management policy','Medical waste management policy']],
+ ['Programme',['Strategy & theory of change','MEAL framework','Organisational capacity statement (2 pages)','Past project reports & evaluations','Key staff CVs','Clinical licences / medical registrations of staff & facilities','Donor references (2–3)','Standard logframe & budget templates']],
+ ['Registrations',['UN Partner Portal profile','EU Funding & Tenders PIC (validated)','OCHA pooled fund capacity assessment (per country)','US SAM.gov UEI (for US-funded calls)','IATI publisher account','Start Network membership','Core Humanitarian Standard self-assessment / certification','UK Aid Match eligibility (3 yrs audited accounts, UK board)']]
+];
+const SUP_CATS=['Essential medicines','Medical consumables','Medical equipment','Emergency kits','Cold chain & vaccines','Lab & diagnostics','Nutrition products','Surgical & trauma','Other'];
+const SUP_STATUS=['Needed','Quote / request sent','Pledged / ordered','In transit','Received','Distributed'];
+const SOURCES=[
+ {g:'Donated medicines & supplies',items:[
+  ['International Health Partners (IHP)','UK','UK charity coordinating donated, long-dated medicines and Essential Health Packs from pharmaceutical companies for NGO partners in disaster-hit and vulnerable countries.','https://www.ihpuk.org','Apply to become a partner; good fit for a UK medical NGO.'],
+  ['Direct Relief','US / global','Donated medicines, supplies and equipment for nonprofit health facilities and licensed medical professionals worldwide.','https://www.directrelief.org','Health facilities apply to become partners, then order from an inventory system.'],
+  ['Americares','US / global','Donated medicines and medical supplies for partner health facilities and medical outreach.','https://www.americares.org',''],
+  ['MAP International','US / global','Essential medicines and health supplies for clinics and hospitals in developing countries.','https://www.map.org',''],
+  ['MedShare','US / global','Recovered surplus medical supplies and equipment for overseas hospitals and medical teams.','https://www.medshare.org','Direct shipments to approved international institutions.'],
+  ['Project C.U.R.E.','US / global','Donated medical supplies and equipment, often by 40-ft container after a needs assessment.','https://projectcure.org','Recipient usually covers shipping; plan freight in your grant budget.'],
+  ['Partnership for Quality Medical Donations (PQMD)','Global','Alliance of NGOs & companies setting standards for quality medical donations.','https://www.pqmd.org','Useful network and guidance.']]},
+ {g:'Medical manufacturers & health-company programmes',items:[
+  ['Philips Foundation','Netherlands / global','Partners with NGOs to improve access to healthcare for underserved communities (mother & child health, NCD screening, acute & emergency care) and gives disaster relief; brings Philips medical-technology expertise.','https://www.philips.com/a-w/about/philips-foundation.html','Partnership-led: send a short concept on a healthcare-access need where Philips technology or expertise helps.'],
+  ['Medtronic product donations','US / global','Donates medical products (wound care, airway, surgical supplies, generators) through its donation partners Americares, Direct Relief and MedShare.','https://www.medtronic.com','Route in: become a partner of Americares, Direct Relief or MedShare.'],
+  ['Laerdal Global Health','Norway / global','Low-cost training and life-saving devices for maternal & newborn care in low-resource settings; Buy One Gift One donates birthing simulators to partner programmes.','https://laerdalglobalhealth.com','Pairs well with Laerdal Foundation research grants (see Find grants).'],
+  ['Brother’s Brother Foundation','US / global','Medical supplies, from pharmaceutical basics to surgical tools, for organisations and medical missions.','https://www.brothersbrother.org',''],
+  ['AdvaMed relief-response NGO list','US / global','The medtech industry association lists NGOs that member companies can partner with in crises; listed NGOs follow PQMD donation guidelines.','https://www.advamed.org/our-work/key-issues/relief-response/','Following PQMD guidelines and joining PQMD increases your chances with manufacturers.']]},
+ {g:'Not-for-profit procurement (buy at fair prices)',items:[
+  ['IDA Foundation','Netherlands','Not-for-profit supplier of ~3,000 quality-assured essential medicines and medical supplies to NGOs in 130+ countries; procurement services.','https://www.idafoundation.org','Warehouses in the Netherlands & Dubai; emergency kits.'],
+  ['IMRES','Netherlands','Humanitarian medical supplier: medicines, equipment and pre-packed kits.','https://www.imres.nl',''],
+  ['Mission Pharma','Denmark','Supplier of medicines and medical kits for humanitarian & development programmes.','https://www.missionpharma.com',''],
+  ['UNICEF Supply Division (procurement services)','Denmark','Procurement of vaccines, medicines, nutrition and cold-chain items, mainly for governments & partners.','https://www.unicef.org/supply','Also the UNICEF Supply Catalogue for specifications and indicative prices.']]},
+ {g:'Standard emergency health kits',items:[
+  ['WHO Interagency Emergency Health Kit (IEHK)','Global','Standard kit of medicines & devices for ~10,000 people for 3 months (basic + supplementary units).','https://www.who.int/emergencies/emergency-health-kits','Order through IDA, IMRES, Mission Pharma or UNICEF.'],
+  ['WHO Trauma & Emergency Surgery Kit (TESK)','Global','Kit for trauma and surgical care in emergencies.','https://www.who.int/emergencies/emergency-health-kits',''],
+  ['WHO NCD, cholera & other kits','Global','Kits for non-communicable diseases, cholera, malaria and more.','https://www.who.int/emergencies/emergency-health-kits','']]},
+ {g:'Equipment, cold chain & standards',items:[
+  ['WHO Medical device donations: considerations','Global','Guidance on requesting & accepting donated equipment: compatibility, spare parts, training, maintenance.','https://www.who.int/publications/i/item/9789241501408',''],
+  ['WHO PQS catalogue (cold chain)','Global','Prequalified fridges, freezers, cold boxes and temperature monitors for vaccines & medicines.','https://apps.who.int/immunization_standards/vaccine_quality/pqs_catalogue/',''],
+  ['WHO Model List of Essential Medicines','Global','Reference list for what to stock and request.','https://www.who.int/groups/expert-committee-on-selection-and-use-of-essential-medicines/essential-medicines-lists',''],
+  ['THET: Health Partnerships','UK','UK charity supporting health partnerships; guidance on equipment and health-worker training.','https://www.thet.org','']]}
+];
+const SUP_CHECK=['Follows WHO Guidelines for medicine donations (needs-based, agreed with recipient)','Items are on the national or WHO Essential Medicines List','Sourced from WHO-prequalified or stringent-regulator-approved manufacturers / quality-assured suppliers','Shelf life on arrival of at least 12 months (or as national rules require)','Labels & leaflets in a language health staff understand','Import permit / MoH approval & duty exemption obtained before shipping','Controlled drugs: export & import licences in place (UK Home Office + destination)','UK storage/distribution: check whether an MHRA Wholesale Dealer’s Licence is needed','Storage meets Good Distribution Practice; temperature monitoring in place','Cold chain plan for vaccines & thermolabile items (PQS equipment, loggers)','Equipment: voltage/plug compatible, spare parts, consumables, training & maintenance plan','Pharmacovigilance & recall procedure','Safe disposal of expired medicines & medical waste','Full costs budgeted in grants: procurement, freight, insurance, customs, storage, distribution'];
+
+const REL_STAGES=['Identified','Researching','First contact','Cultivating','Proposal / ask made','Committed','Declined / paused'];
+const FUNDS=[
+ {g:'Corporate & pharmaceutical partnerships',d:'Multi-year partnerships, product donations and employee-giving programmes. Almost always relationship-led: research the company’s health priorities, find a contact, propose a partnership.',items:[
+  ['Takeda Global CSR Program','Corporate','Global','Multi-year partnerships with NGOs on health systems & access to healthcare in LMICs, selected by an annual employee vote. 2026 focus: climate-resilient health systems.','https://www.takeda.com/corporate-responsibility/','Watch for the annual request for proposals; partnerships are typically USD multi-million over several years.'],
+  ['Pharma & medtech product donation programmes','Corporate','Global','Most large pharma and medtech companies donate products through intermediaries rather than directly to NGOs.','https://www.ihpuk.org','Route in: become a partner of International Health Partners (UK) or Direct Relief: see the Medical section.'],
+  ['Pharma corporate foundations & access-to-medicine programmes','Corporate','Global','Company foundations (e.g. Johnson & Johnson, Pfizer, Abbott, GSK, AstraZeneca, Novartis Foundation) fund health-worker training, access and health-systems work.','https://accesstomedicinefoundation.org','Mostly by invitation. Use the Access to Medicine Index to see each company’s priority countries & diseases, then approach their corporate affairs / access teams.'],
+  ['Employee giving & corporate match funding','Corporate','Global','Platforms that route employee donations and company matching to vetted charities.','https://benevity.com','Register your charity (Benevity, also via CAF in the UK) so employees of partner companies can give and get matched.']]},
+ {g:'In-kind logistics & services',d:'Free or discounted services that free up grant money for programmes.',items:[
+  ['Airlink','Logistics','Global','Nonprofit connecting humanitarian NGOs with airlines for free or discounted cargo and passenger flights; works with 50+ airlines and 100+ NGO partners.','https://airlinkflight.org','Apply to join as an NGO partner before a crisis so you can request airlift quickly.'],
+  ['Airbus Foundation','Corporate foundation','Global','Funds humanitarian airlift capacity (via Airlink) and supports aviation-based relief.','https://www.foundation.airbus.com',''],
+  ['Google for Nonprofits / Ad Grants','Tech','UK & global','Free Workspace and search-advertising grants for eligible charities.','https://www.google.com/nonprofits/',''],
+  ['Microsoft for Nonprofits','Tech','UK & global','Donated and discounted Microsoft 365 and Azure credits.','https://nonprofit.microsoft.com',''],
+  ['TechSoup network','Tech','Global','Discounted software and hardware for verified charities.','https://www.techsoup.org','']]},
+ {g:'UK trusts & foundations funding overseas health',d:'UK-registered charities have an advantage here: many trusts can only fund UK charities working overseas. Grants are often smaller but quick and flexible, and good for co-funding.',items:[
+  ['Souter Charitable Trust','Trust','UK & overseas','Relief of human suffering in the UK and overseas; prefers (not exclusively) Christian ethos. Typical one-off grants £1,000–£3,000.','https://www.soutercharitabletrust.org.uk/how-to-apply','Monthly: apply by the last Monday of each month. Max 2 pages + latest audited accounts.'],
+  ['Hilden Charitable Trust','Trust','Developing countries','Overseas priorities include community development, education and health, especially for women & girls.','https://www.hildencharitabletrust.org.uk','Three grant rounds a year.'],
+  ['Beatrice Gilmore Trust','Trust','Africa & Indian subcontinent','£5,000–£15,000 for single-year projects; UK charities with income £50k–£1.5m.','https://hubcymruafrica.wales/funding/','Annual round (2026 ran June–August).'],
+  ['BMA Giving','Professional body','LMICs','Grants to UK-registered charities delivering healthcare projects, including humanitarian health in low- and middle-income countries, especially where doctors play a key role.','https://www.bma.org.uk/about-us/corporate-social-environmental-responsibility/cser/our-charitable-and-community-work/','Annual cycle (2026 closed). Watch for the 2027 round.'],
+  ['Wellcome','Foundation','Global','Major UK funder of health research, incl. humanitarian health via Elrha.','https://wellcome.org','Research partnerships; usually with a university.'],
+  ['Children’s Investment Fund Foundation (CIFF)','Foundation','Global','Large UK foundation: child health, nutrition, maternal health.','https://ciff.org','By invitation; build a relationship.'],
+  ['Vitol Foundation','Foundation','Global','Funds health, nutrition and humanitarian work in LMICs.','https://www.vitolfoundation.org','Relationship-led.']]},
+ {g:'Emergency & pooled funding mechanisms',d:'Money that moves fast when a crisis hits. Get access set up before you need it.',items:[
+  ['Disasters Emergency Committee (DEC)','Pooled appeal','UK','Joint UK public appeals for major overseas disasters, shared among its 15 member charities.','https://www.dec.org.uk','Membership has strict size and track-record criteria. The realistic route is to be an implementing partner of a DEC member in your areas of operation.'],
+  ['Start Fund (Start Network)','Pooled fund','Global','Rapid funding for small and medium crises, released within days of an alert.','https://startnetwork.org','Become a member; see Find grants.'],
+  ['OCHA Country-Based Pooled Funds','UN pooled fund','Crisis countries','Country allocations to NGOs through the humanitarian clusters.','https://www.unocha.org/our-work/humanitarian-financing/country-based-pooled-funds','Complete the capacity assessment in each country you work in.'],
+  ['UN agency implementing partnerships','UN','Global','UNICEF, UNHCR, WFP, UNFPA and WHO fund NGOs as implementing partners (programme agreements).','https://www.unpartnerportal.org','Register on the UN Partner Portal; join health & nutrition clusters in-country.']]},
+ {g:'Networks & coalitions that unlock funding',d:'Membership gives access to pooled funds, consortium bids, funding alerts and donor relationships.',items:[
+  ['Bond (UK network for international development)','Network','UK','UK network of international NGOs: funding news, EU/FCDO funding guidance, training, and consortium-building.','https://www.bond.org.uk','Membership fee by income band; very useful for a UK charity.'],
+  ['Global Health Cluster (WHO-led)','UN coordination','Crisis countries','Coordinates health response in crises; active cluster partners shape pooled-fund allocations (OCHA funds) and joint appeals.','https://healthcluster.who.int','Join the health cluster in each country where you work.'],
+  ['Start Network membership','Network','Global','Members access the Start Fund and other pooled crisis funds.','https://startnetwork.org',''],
+  ['ICVA','Network','Global','Global NGO network on humanitarian financing and policy.','https://www.icvanetwork.org',''],
+  ['Partnership for Quality Medical Donations (PQMD)','Network','Global','Alliance of NGOs and healthcare companies around quality medical donations: a direct line to manufacturers.','https://www.pqmd.org','']]},
+ {g:'Major donors, family offices & philanthropy networks',d:'Relationship-led giving from wealthy individuals, family foundations and philanthropy advisers. Larger, flexible gifts.',items:[
+  ['Philanthropy advisers & donor networks','Network','UK & global','Advisers (e.g. Charities Aid Foundation, Prism the Gift Fund, Founders Pledge) channel gifts from philanthropists and family offices.','https://www.cafonline.org','Make sure your charity is listed and due-diligence ready (see Organisation & documents).'],
+  ['Gulf & Islamic institutional philanthropy','Network','Gulf & global','Government-linked funds (KSrelief, Qatar Fund for Development) and large Zakat & Sadaqah institutions fund health and relief.','https://www.ksrelief.org','Relationship-led; Zakat-eligible project designs help. See Find grants for KSrelief and QFFD.']]},
+ {g:'Gulf & Middle East funders',d:'Your core region. Most Gulf funders are relationship-led: no open calls, so start with a short concept note, a visit or an introduction, and design projects that can count as Zakat-eligible where relevant. Grants with deadlines and amounts are in the Middle East hub.',items:[
+  ['KSrelief (King Salman Humanitarian Aid & Relief Centre)','Government','Saudi Arabia → Yemen, Syria, Lebanon, Palestine & Africa','Saudi government humanitarian agency; large health, nutrition and medical programmes with international NGO partners.','https://www.ksrelief.org','Partnerships department; field offices in the region.'],
+  ['Saudi Fund for Development (SFD)','Government','Saudi Arabia','Government development fund; mostly works with governments on health infrastructure.','https://www.sfd.gov.sa','Route in: implementing partner on government-financed health projects.'],
+  ['Qatar Fund for Development (QFFD)','Government','Qatar','Qatar government development and humanitarian funder; partners with UN agencies and international NGOs, big in Syria, Gaza and Yemen.','https://qatarfund.org.qa','Relationship-led: concept note to the partnerships team.'],
+  ['Qatar Charity','Foundation','Qatar → 70+ countries','Large Qatari NGO and funder; cooperation agreements with UN agencies and international NGOs in health, WASH and relief.','https://www.qcharity.org/en','Country offices (Gaza, Türkiye/Syria) are a good first contact.'],
+  ['Qatar Red Crescent Society','Red Cross / Red Crescent','Qatar','Runs and funds health programmes and hospitals across the region; partners with NGOs.','https://www.qrcs.org.qa','Operational partnerships, especially health.'],
+  ['UAE Aid / Ministry of Foreign Affairs (UAE)','Government','United Arab Emirates','UAE government foreign aid; humanitarian & health grants, often through UN agencies and Emirati partners.','https://www.mofa.gov.ae','Approach via the UAE embassy or an Emirati partner organisation.'],
+  ['Emirates Red Crescent','Red Cross / Red Crescent','United Arab Emirates','Major humanitarian funder and implementer in Yemen, Syria, Gaza, Sudan.','https://www.emiratesrc.ae','Partnership-led.'],
+  ['The Big Heart Foundation (Sharjah)','Foundation','United Arab Emirates','Grants to UN agencies, international NGOs and local nonprofits for healthcare, refugees and emergency relief (Gaza, Lebanon, Jordan, Iraq, Egypt).','https://www.tbhf.ae','Concept note via website.'],
+  ['Kuwait Fund for Arab Economic Development','Government','Kuwait','Kuwait government development fund, mostly government-to-government; occasional humanitarian grants.','https://www.kuwait-fund.org','Route in via government health projects.'],
+  ['AGFUND (Arab Gulf Programme for Development)','Foundation','Saudi Arabia (regional)','Gulf-backed development fund; project funding with NGOs and the US$1M Prince Talal Prize.','https://agfund.org','Concept note; prize via online nomination.'],
+  ['Alwaleed Philanthropies','Foundation','Saudi Arabia','Multi-year partnerships in health and disaster relief.','https://www.alwaleedphilanthropies.org','Partnership-led, ≥3-year commitments.'],
+  ['Islamic Development Bank (IsDB) & Lives and Livelihoods Fund','Multilateral','IsDB member states','Health and disease-control financing for governments (US$2.5bn LLF).','https://www.isdb.org','Implementing partner on government programmes.'],
+  ['OPEC Fund for International Development','Multilateral','Vienna (OPEC states)','Grant programme has funded NGO health projects in Jordan and Palestine.','https://opecfund.org','Concept note to the grants team.'],
+  ['OCHA pooled funds: Syria, Lebanon, oPt, Yemen, Iraq','Pooled fund','UN','The most accessible large grants for NGOs in the region.','https://cbpf.unocha.org','UN Partner Portal + GMS capacity assessment in each country.']]},
+ {g:'Gaza, Palestine, Lebanon & Iraq: governments & organisations',d:'Who funds health and humanitarian work in your three priority places, and how to reach them. Live grants with amounts are in the Middle East hub.',items:[
+  ['Irish Aid: Representative Office of Ireland, Ramallah','Government','Ireland → Palestine','€42M for Palestine in 2026 (€20M UNRWA, €2M Red Crescents, rest allocated through the year).','https://dfa.ie/prep/ramallah/our-role/irish-aid-in-palestine/','Concept note to the Ramallah office; or partner with an Irish NGO.'],
+  ['Irish Aid Civil Society Fund','Government','Ireland','€50k–€800k a year for up to 5 years; Irish and invited international NGOs.','https://www.ireland.ie/en/irish-aid/who-we-work-with/civil-society/','Ask Irish Aid about an invitation, or register an Irish entity.'],
+  ['Irish NGOs as partners: GOAL, Concern, Trócaire, Christian Aid Ireland','NGO partner','Ireland → Gaza, Lebanon, Syria, Iraq','Hold Irish Aid\'s €100M/year partnership funds and sub-grant to implementing partners.','https://www.goal.ie','Approach their country teams with a joint health project.'],
+  ['UK FCDO: OPT and Lebanon teams','Government','United Kingdom','£88M Gaza/West Bank package (Sept 2026); funds UK medical NGOs like UK-Med; Lebanon humanitarian programme.','https://www.gov.uk/world/organisations/british-consulate-general-jerusalem','Concept note to FCDO country teams; your home government.'],
+  ['EU ECHO: Palestine, Lebanon/Syria, Iraq','EU','European Union','2026: Palestine €124.4M, Syria-Lebanon €234.8M, Iraq €12M.','https://www.dgecho-partners-helpdesk.eu','Via a certified EU partner, or your own EU entity (2028 certificate).'],
+  ['EU Delegations (Jerusalem, Beirut, Baghdad): NDICI calls','EU','European Union','Development & health calls (e.g. €30M primary health care call in Lebanon in 2023).','https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals','Register a PIC; set alerts for Palestine, Lebanon, Iraq.'],
+  ['Japan: embassy GGP grants (Palestine, Lebanon, Iraq)','Government','Japan','Up to ~US$133–135k per project for equipment & facilities.','https://www.ps.emb-japan.go.jp/itpr_en/GGP.html','Local registration needed; best for medical equipment.'],
+  ['Arab Fund for Economic & Social Development (AFESD)','Multilateral','Kuwait (Arab League states)','Has administered OPEC Fund grants to Gaza health NGOs; Arab-state development funder.','https://www.arabfund.org','Relationship-led; often via Palestinian partners.'],
+  ['Taawon (Welfare Association)','Foundation','Palestine & Lebanon camps','Funds and implements health and relief in Gaza with 20 local partners.','https://www.taawon.org/en','Partnership proposal.'],
+  ['Jordan Hashemite Charity Organization (JHCO)','Government-linked','Jordan → Gaza','Main Jordanian channel for Gaza aid; signed an MoU with Taawon to support Gaza\'s health sector.','https://www.jhco.org.jo','Partnership for medical supplies and convoys.'],
+  ['Egyptian Red Crescent','Red Cross / Red Crescent','Egypt → Gaza','Main logistics channel for aid into Gaza via Rafah; funded by Ireland and others.','https://egyptianrc.org','Coordinate medical supply shipments.'],
+  ['Czech, Polish, Canadian & Australian embassy small grants','Government','Various','Small grants (US$8.5k–50k) for local organisations in Iraq, Lebanon and Palestine.','https://mzv.gov.cz/erbil/en/news_and_events/small_scale_development_projects_2027.html','Use a locally registered branch or partner.'],
+  ['UNRWA & UN agency partnerships','UN','United Nations','UNRWA, WHO, UNICEF, UNFPA contract NGOs for health services in Gaza, Lebanon and Iraq.','https://www.unpartnerportal.org','Register on the UN Partner Portal and filter by country.']]}
+];
+
+// ================= data layer =================
+let db=null,sample=null;
+const S={opps:[],apps:[],docs:{},supplies:[],settings:{},funders:[]};
+const LS={get(k,d){try{const v=localStorage.getItem('ggp_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('ggp_'+k,JSON.stringify(v))}catch(e){}}};
+function loadLocal(){S.funders=LS.get('funders',[]);S.apps=LS.get('apps',[]);S.docs=LS.get('docs',{});S.supplies=LS.get('supplies',[]);S.settings=LS.get('settings',{});S.opps=LS.get('opps',[])}
+function saveLocal(col){if(col==='docs'||col==='settings')LS.set(col,S[col]);else LS.set(col,S[col])}
+async function put(col,id,data){
+  if(col==='docs'||col==='settings'){S[col][id]=data}else{const arr=S[col];const i=arr.findIndex(x=>x.id===id);if(i>=0)arr[i]={...data,id};else arr.push({...data,id})}
+  if(db){try{const body={...data};delete body.id;await db.doc(col+'/'+id).set(body)}catch(e){toast(e&&/invalid_argument|permission|denied|forbidden/i.test((e.code||'')+(e.message||''))?'Not saved: you have view-only access. Ask the owner for edit access.':'Could not save, try again')}}
+  else saveLocal(col);
+}
+async function del(col,id){S[col]=S[col].filter(x=>x.id!==id);if(db){try{await db.doc(col+'/'+id).delete()}catch(e){toast('Could not delete')}}else saveLocal(col)}
+const findApp=id=>S.apps.find(a=>a.id===id);
+const findOpp=id=>S.opps.find(o=>o.id===id);
+const appFor=oppId=>S.apps.find(a=>a.oppId===oppId&&a.stage!=='Withdrawn');
+let saveTimers={},PEND={};
+function patchApp(id,patch,quiet){const a=findApp(id);if(!a)return;Object.assign(a,patch);PEND[id]={...(PEND[id]||{}),...patch};clearTimeout(saveTimers[id]);saveTimers[id]=setTimeout(()=>{const cur={...findApp(id),...PEND[id]};delete PEND[id];put('apps',id,cur).then(()=>{if(!quiet)toast('Saved')})},500)}
+
+// ================= routing =================
+const NAV=[['',[['dashboard','📊','Dashboard']]],['Grants',[['grants','🔎','Find grants'],['mideast','📍','Middle East hub'],['applications','📝','Applications'],['timeline','🗓️','Timeline'],['register','📁','Applied & awarded']]],['Funds',[['funds','🏦','Funding sources'],['relations','🤝','Funder relationships']]],['Medical',[['supplies','💊','Supplies & equipment needs'],['medsources','🏥','Where to get supplies'],['medquality','✅','Quality & compliance']]],['Finance',[['finance','💷','Financial health'],['costs','🧮','Budget & cost recovery'],['investors','📈','Investors & social finance']]],['Organisation',[['readiness','🗂️','Organisation & documents'],['compliance','⚖️','Compliance & safety']]]];
+const VIEWS=NAV.flatMap(g=>g[1]);
+let view='dashboard',detail=null,sub={};
+function go(v,d){view=v;detail=d||null;try{history.replaceState(null,'','#'+v)}catch(e){}render();window.scrollTo(0,0)}
+function navHTML(){const c={applications:S.apps.filter(a=>ACTIVE.includes(a.stage)).length,register:S.apps.filter(a=>!ACTIVE.includes(a.stage)&&a.stage!=='Withdrawn').length,grants:S.opps.filter(o=>state(o)!=='closed').length,relations:S.funders.filter(f=>!/Committed|Declined/.test(f.stage)).length,supplies:S.supplies.filter(x=>x.status!=='Distributed').length};
+  return NAV.map(([g,L])=>(g?`<div class="sep">${g}</div>`:'')+L.map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[2]}${c[v[0]]?`<span class="cnt">${c[v[0]]}</span>`:''}</button>`).join('')).join('')}
+
+// ================= opportunities =================
+function state(o){if(o.status==='closed')return'closed';if(o.status==='paused')return'paused';if(o.opens&&days(o.opens)>0)return'soon';if(o.deadline&&days(o.deadline)<0)return'closed';if(o.status==='rolling')return'rolling';if(o.deadline)return'open';if(o.status==='upcoming')return'expected';return'rolling'}
+function badge(o){const s=state(o);
+  if(s==='open'){const n=days(o.deadline);const c=n<=14?'red':n<=45?'amber':'green';return`<div class="dl ${c}"><b>${fmtD(o.deadline)}</b>${n===0?'closes today':n+' days left'}</div>`}
+  if(s==='soon')return`<div class="dl blue"><b>Opens ${fmtS(o.opens)}</b>${o.deadline?'closes '+fmtS(o.deadline):''}</div>`;
+  if(s==='rolling')return`<div class="dl green"><b>Rolling</b>${o.deadline?'until '+fmtS(o.deadline):'any time'}</div>`;
+  if(s==='expected')return`<div class="dl blue"><b>Expected</b>next round</div>`;
+  if(s==='paused')return`<div class="dl"><b>Paused</b>funds allocated</div>`;
+  return`<div class="dl"><b>Closed</b>${o.deadline?fmtS(o.deadline):''}</div>`}
+const UKT={direct:['g','🇬🇧 Apply directly'],partner:['a','🇬🇧 Via a partner'],check:['a','🇬🇧 Check eligibility'],no:['r','🇬🇧 Not eligible']};
+const ukTag=o=>{const m=UKT[o.uk];return m?`<span class="tag ${m[0]}">${m[1]}</span>`:''};
+const FLAGS={'United Kingdom':'🇬🇧','European Union':'🇪🇺','United Nations':'🇺🇳','United States':'🇺🇸','Italy':'🇮🇹','Czech Republic':'🇨🇿','Germany':'🇩🇪','Norway':'🇳🇴','France':'🇫🇷','Denmark':'🇩🇰','Sweden':'🇸🇪','Switzerland':'🇨🇭','Japan':'🇯🇵','Saudi Arabia':'🇸🇦','Qatar':'🇶🇦','Australia':'🇦🇺','Canada':'🇨🇦','Netherlands':'🇳🇱','Ireland':'🇮🇪','Poland':'🇵🇱','Finland':'🇫🇮','Spain':'🇪🇸','Belgium':'🇧🇪','Korea':'🇰🇷','United Arab Emirates':'🇦🇪','Kuwait':'🇰🇼','Bahrain':'🇧🇭','Oman':'🇴🇲','Jordan':'🇯🇴','Egypt':'🇪🇬','Türkiye':'🇹🇷','Islamic Development Bank':'🌐','Global':'🌍'};
+const ME_RX=/syria|lebanon|jordan|iraq|yemen|palestin|gaza|west bank|egypt|t[uü]rkiye|turkey|iran|libya|middle east|arab|mena\b/i,GULF=['Saudi Arabia','Qatar','United Arab Emirates','Kuwait','Bahrain','Oman'];
+const isME=o=>!!(o.me||ME_RX.test((o.where||'')+' '+(o.title||''))||GULF.includes(o.fc));
+const ME_COUNTRIES=[['Palestine (Gaza & West Bank)','🇵🇸',/palestin|gaza|west bank/i,'⭐ Priority. 2026 donor money: EU €124.4M, UK £88M package, Ireland €42M, oPt Humanitarian Fund US$69.8M received in 2026. Health, rehabilitation and mental health are named priorities.'],['Lebanon','🇱🇧',/lebanon/i,'⭐ Priority. EU €100M for Lebanon in 2026 (emergency health care first) after 800,000+ people were displaced in March 2026. Lebanon Humanitarian Fund, Japan GGP and many embassy grants.'],['Iraq','🇮🇶',/iraq/i,'⭐ Priority. Note: OCHA\'s Iraq Humanitarian Fund is closing. Main routes now: EU ECHO Iraq (€12M in 2026), embassy small grants (Czech, Japan, Canada, Australia), UN agency partnership calls on the UN Partner Portal, and Gulf funders.'],['Syria','🇸🇾',/syria/i],['Yemen','🇾🇪',/yemen/i],['Jordan','🇯🇴',/jordan/i],['Egypt','🇪🇬',/egypt/i],['Türkiye','🇹🇷',/t[uü]rkiye|turkey/i]];
+const flag=c=>FLAGS[c]||(/Multilateral/.test(c||'')?'🌐':'🏳️');
+const sizeGBP=o=>(o.amax||o.amin)?gbp(o.amax||o.amin,o.acur||'GBP'):null;
+function grantSize(o){const c=o.acur||'GBP';
+  if(o.amin||o.amax){const r=o.amin&&o.amax&&o.amin!==o.amax?`${money(o.amin,c)} – ${money(o.amax,c)}`:o.amax?`Up to ${money(o.amax,c)}`:`From ${money(o.amin,c)}`;
+   const g=c!=='GBP'?` <span class="note">(≈ ${o.amin&&o.amax&&o.amin!==o.amax?short(gbp(o.amin,c))+' – '+short(gbp(o.amax,c)):short(gbp(o.amax||o.amin,c))})</span>`:'';
+   return`<b>${r}</b>${g}${o.aNote?`<div class="note" style="margin:2px 0 0">${esc(o.aNote)}</div>`:''}`}
+  return`<b>${esc(o.aNote||o.amount||'Not published')}</b>`}
+const sortKey=o=>({open:0,soon:1,rolling:2,expected:3,paused:4,closed:5}[state(o)])*1e6+(o.deadline?days(o.deadline)+5000:9e5);
+
+function vGrants(){
+  const f=sub.g||(sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',mode:'list'});
+  const types=[...new Set(S.opps.map(o=>o.type))].sort(),themes=[...new Set(S.opps.flatMap(o=>o.focus||[]))].sort();
+  let rows=S.opps.filter(o=>{const s=state(o);
+    if(f.st==='live'&&s==='closed')return false;if(f.st==='open'&&s!=='open')return false;if(f.st==='rolling'&&s!=='rolling')return false;if(f.st==='soon'&&!(s==='soon'||s==='expected'))return false;
+    if(f.rg==='me'&&!isME(o))return false;if(f.tr==='ok'&&!trustOK(o))return false;if(f.tr==='chk'&&trustOK(o))return false;if(f.type&&o.type!==f.type)return false;if(f.fc&&(o.fc||'Other')!==f.fc)return false;
+    if(f.sz){const g=sizeGBP(o);if(f.sz==='np'){if(g!==null)return false}else{if(g===null)return false;if(f.sz==='s'&&g>50000)return false;if(f.sz==='m'&&(g<=50000||g>500000))return false;if(f.sz==='l'&&(g<=500000||g>5000000))return false;if(f.sz==='xl'&&g<=5000000)return false}}
+    if(f.wc&&!((o.where||'').toLowerCase().includes(f.wc.toLowerCase())||/global|worldwide|developing countries|LMIC|crisis countries|ODA/i.test(o.where||'')))return false;if(f.theme&&!(o.focus||[]).includes(f.theme))return false;if(f.uk&&o.uk!=='direct')return false;
+    if(f.q&&!JSON.stringify([o.title,o.funder,o.where,o.eligibility,o.focus,o.notes]).toLowerCase().includes(f.q.toLowerCase()))return false;return true}).sort((a,b)=>sortKey(a)-sortKey(b));
+  const latest=S.opps.map(o=>o.checked).filter(Boolean).sort().pop();
+  return`<div class="head"><div><h2>Find grants</h2><p>Institutional & government funding worldwide, updated automatically every Monday${latest?' · last refresh '+fmtD(latest):''}. Each grant shows its <b>grant size</b> and an <b>Apply</b> button that goes straight to the application page or portal. Use <b>Track & prepare</b> to open a workspace with a timeline.</p></div><div style="display:flex;gap:6px"><button class="btn" data-act="csvOpps">⬇ Export</button><button class="btn" data-act="addOpp">＋ Add a grant you found</button></div></div>
+  <div class="banner">Always confirm deadlines and eligibility on the funder's own page before writing.</div>
+  <div class="bar"><input type="text" placeholder="Search funder, country, theme…" value="${esc(f.q)}" data-gf="q">
+   <select data-gf="st">${[['live','All live'],['open','Open with deadline'],['rolling','Rolling'],['soon','Opening soon / expected']].map(x=>`<option value="${x[0]}" ${f.st===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select>
+   <select data-gf="rg"><option value="">🌍 All regions</option><option value="me" ${f.rg==='me'?'selected':''}>📍 Middle East focus</option></select>
+   <select data-gf="tr"><option value="">All (incl. to be checked)</option><option value="ok" ${f.tr==='ok'?'selected':''}>✔ Confirmed only</option><option value="chk" ${f.tr==='chk'?'selected':''}>⚠ Needs a team check</option></select>
+   <select data-gf="type"><option value="">All funder types</option>${types.map(t=>`<option ${f.type===t?'selected':''}>${esc(t)}</option>`).join('')}</select>
+   <select data-gf="theme"><option value="">All themes</option>${themes.map(t=>`<option ${f.theme===t?'selected':''}>${esc(t)}</option>`).join('')}</select>
+   <select data-gf="fc"><option value="">All funder countries</option>${[...new Set(S.opps.map(o=>o.fc||'Other'))].sort().map(c=>`<option value="${esc(c)}" ${f.fc===c?'selected':''}>${flag(c)} ${esc(c)}</option>`).join('')}</select>
+   <select data-gf="sz">${[['','Any grant size'],['s','Up to £50k'],['m','£50k – £500k'],['l','£500k – £5M'],['xl','Over £5M'],['np','Size not published']].map(x=>`<option value="${x[0]}" ${f.sz===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select>
+   <input type="text" placeholder="Country where you work (e.g. Sudan)" value="${esc(f.wc)}" data-gf="wc" style="max-width:230px">
+   <label class="tog"><input type="checkbox" data-gf="uk" ${f.uk?'checked':''}> UK charity can apply directly</label>
+   <div style="display:flex;gap:4px;margin-left:auto"><button class="btn sm ${f.mode==='list'?'pri':''}" data-act="gmode" data-m="list">List</button><button class="btn sm ${f.mode==='country'?'pri':''}" data-act="gmode" data-m="country">By funder country</button></div></div>
+  <div class="note" style="margin-bottom:8px">${rows.length} opportunities</div>
+  ${!rows.length?`<div class="empty">${S.opps.length?'No opportunities match these filters.':'Loading opportunities… (sign in to claude.ai to load the shared list)'}</div>`
+   :f.mode==='country'?(()=>{const G={};rows.forEach(o=>{(G[o.fc||'Other']=G[o.fc||'Other']||[]).push(o)});return Object.keys(G).sort((a,b)=>G[b].length-G[a].length||a.localeCompare(b)).map(c=>`<h3 style="margin:20px 0 10px;font-size:18px">${flag(c)} ${esc(c)} <span class="note">· ${G[c].length} opportunit${G[c].length>1?'ies':'y'}</span></h3>${G[c].map(oppCard).join('')}`).join('')})()
+   :rows.map(oppCard).join('')}`;
+}
+function meRow(o){const a=appFor(o.id),st=state(o),ap=o.applyUrl||o.url;
+  return`<div class="row" style="grid-template-columns:110px 1fr auto"><b style="font-size:12px">${st==='open'?'Due '+fmtS(o.deadline):st==='rolling'?'Rolling':st==='soon'?'Opens '+fmtS(o.opens):st==='expected'?'Expected':esc(st)}</b>
+   <div>${esc(o.title)}<div class="note" style="margin:0">${flag(o.fc)} ${esc(o.funder)} · 💰 ${grantSize(o)}</div><div style="margin-top:3px">${ukTag(o)}</div></div>
+   <div style="display:flex;flex-direction:column;gap:4px"><a class="btn sm pri" href="${esc(ap)}" target="_blank" rel="noopener">Apply ↗</a>${a?`<button class="btn sm" data-act="openApp" data-id="${a.id}">Open</button>`:`<button class="btn sm" data-act="startApp" data-id="${esc(o.id)}">＋ Track</button>`}</div></div>`}
+const CMP=[
+ ['Sanctions & counter-terrorism',[
+  ['san1','Screen every partner, supplier, contractor and major donor against the UK Sanctions List before signing, and again at least yearly (record the date and result).'],
+  ['san2','Check the Home Office list of proscribed organisations and, where funders require it, the UN, EU and US (OFAC) lists.'],
+  ['san3','For Gaza, Syria, Yemen, Lebanon and Iraq: written risk assessment per project, covering who controls the area, cash & voucher payments, rent, fuel and local fees.'],
+  ['san4','Check whether a humanitarian exemption covers the work or whether you need an OFSI licence. Apply at least 4 weeks ahead.'],
+  ['san5','Know how to report a suspected sanctions breach to OFSI and a serious incident to the Charity Commission, and who does it.']]],
+ ['Partners & money',[
+  ['par1','Due-diligence file for every partner: registration, governance, accounts, references, bank account in the organisation\'s name.'],
+  ['par2','Written partner agreement with reporting, audit rights, anti-fraud, anti-diversion and safeguarding clauses.'],
+  ['par3','Money moves through regulated banks where possible. Any cash or hawala transfer is documented and approved by trustees.'],
+  ['par4','End-use monitoring: reports, receipts, photos, third-party or remote monitoring where you can\'t visit.']]],
+ ['Safeguarding & people',[
+  ['saf1','Safeguarding and PSEA (protection from sexual exploitation and abuse) policy, with a named lead and a reporting route for communities.'],
+  ['saf2','Staff and volunteer checks (DBS for UK roles; reference checks abroad); code of conduct signed.'],
+  ['saf3','Duty of care: security plan and insurance for staff travelling to conflict areas; follow FCDO travel advice.'],
+  ['saf4','Commit to the Core Humanitarian Standard (CHS) and humanitarian principles. Many institutional donors ask for this.']]],
+ ['Medical supplies',[
+  ['med1','Medicines and devices from quality-assured sources (WHO-prequalified, stringent regulator or vetted wholesaler); no expired or near-expiry donations.'],
+  ['med2','Check export and import rules: UK export controls for sanctioned destinations, plus the destination\'s import and entry rules (e.g. Gaza entry restrictions on "dual-use" items).'],
+  ['med3','Cold chain and storage records, batch tracking, and a recall process.']]],
+ ['Data protection (UK GDPR)',[
+  ['dat1','Do not store beneficiary or patient personal or health data in this platform. Keep it in your secure case-management system.'],
+  ['dat2','Only give team members the access they need; remove leavers promptly.'],
+  ['dat3','Privacy notice and data-processing terms cover staff and partner data shared in grant applications.']]],
+ ['Funder trust (avoid scams)',[
+  ['fun1','Only apply through the funder\'s official website or portal. A link from a listing site is a lead, not the source.'],
+  ['fun2','Real funders never charge an application fee or ask for your bank PIN/passwords. Be wary of gmail/hotmail "funders" and "guaranteed" grants.'],
+  ['fun3','Due diligence on large or unusual donors (source of funds, reputation, conditions), and a gift-acceptance policy approved by trustees.']]]];
+const CMP_LINKS=[
+ ['Charities operating in the Middle East: guidance for trustees (Charity Commission)','https://www.gov.uk/guidance/charities-operating-in-the-middle-east-guidance-and-support-for-trustees'],
+ ['Protecting charities from harm: compliance toolkit (terrorism, due diligence, fraud, moving money)','https://www.gov.uk/government/collections/protecting-charities-from-harm-compliance-toolkit'],
+ ['Charities and terrorism: compliance toolkit chapter 1','https://www.gov.uk/government/publications/charities-and-terrorism'],
+ ['4 things charities need to know about financial sanctions (OFSI)','https://ofsi.blog.gov.uk/2020/11/13/4-things-charities-need-to-know-about-financial-sanctions/'],
+ ['Office of Financial Sanctions Implementation (licences, guidance, reporting)','https://www.gov.uk/government/organisations/office-of-financial-sanctions-implementation'],
+ ['UK Sanctions List','https://www.gov.uk/government/publications/the-uk-sanctions-list'],
+ ['Proscribed terrorist groups (Home Office)','https://www.gov.uk/government/publications/proscribed-terror-groups-or-organisations--2'],
+ ['Report a serious incident (Charity Commission)','https://www.gov.uk/guidance/how-to-report-a-serious-incident-in-your-charity'],
+ ['FCDO travel advice','https://www.gov.uk/foreign-travel-advice'],
+ ['Export Control Joint Unit (export licences)','https://www.gov.uk/government/organisations/export-control-joint-unit'],
+ ['UK GDPR guidance (ICO)','https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/'],
+ ['Core Humanitarian Standard','https://www.corehumanitarianstandard.org']];
+function vCompliance(){const c=S.settings.compliance||{},all=CMP.flatMap(g=>g[1]),done=all.filter(x=>c[x[0]]).length;
+  return`<div class="head"><div><h2>⚖️ Compliance & safety</h2><p>What a UK charity must have in place to take institutional money and work safely in Gaza, Lebanon, Iraq, Syria and Yemen. Tick items as your team completes them; the checklist is shared. This is a practical checklist, not legal advice: take professional advice for high-risk projects.</p></div></div>
+  <div class="grid g4"><div class="card kpi"><div class="l">Checklist complete</div><div class="n">${Math.round(done/all.length*100)}%</div><div class="s">${done}/${all.length} items</div></div>
+   <div class="card kpi"><div class="l">Opportunities in high-risk areas</div><div class="n">${S.opps.filter(o=>state(o)!=='closed'&&HIGHRISK_RX.test(o.where||'')).length}</div><div class="s">need sanctions & partner checks</div></div>
+   <div class="card kpi"><div class="l">Need a team check</div><div class="n">${S.opps.filter(o=>state(o)!=='closed'&&!trustOK(o)).length}</div><div class="s">auto-added or unconfirmed</div></div>
+   <div class="card kpi"><div class="l">OFSI licence lead time</div><div class="n">4+ wks</div><div class="s">apply early if needed</div></div></div>
+  <div class="banner" style="margin-top:14px">UK charities must comply with UK financial sanctions wherever they work, and must check whether donors, partners, contractors or beneficiaries they deal with are sanctioned. Breaches can be criminal offences, so build these checks into every application in the Middle East.</div>
+  ${CMP.map(([g,items])=>`<div class="card" style="margin-top:14px"><h3>${g}</h3>${items.map(([k,t])=>`<label style="display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f0f0"><input type="checkbox" data-cmp="${k}" ${c[k]?'checked':''} style="margin-top:3px"><span ${c[k]?'style="color:#17663a"':''}>${t}</span></label>`).join('')}</div>`).join('')}
+  <div class="card" style="margin-top:14px"><h3>Official guidance</h3><div class="agenda">${CMP_LINKS.map(([t,u])=>`<div class="row" style="grid-template-columns:1fr auto"><div>${esc(t)}</div><a class="btn sm" href="${u}" target="_blank" rel="noopener">Open ↗</a></div>`).join('')}</div></div>
+  <div class="card" style="margin-top:14px"><h3>How the opportunity list is kept trustworthy</h3><ul style="margin:6px 0 0 18px;line-height:1.7">
+   <li><b>✔ Checked against official sources</b> means the deadline and amount were confirmed on the funder's or UN/EU/government page on that date.</li>
+   <li><b>🆕 Added automatically</b> means the daily update found it. A team member should open the funder's page and press <b>Mark as checked</b> before anyone invests time.</li>
+   <li><b>⚠ Not confirmed</b> means the details came only from a listing site and could not be confirmed.</li>
+   <li>Amounts are never invented. If a funder doesn't publish one, the card says "Not published".</li>
+   <li>Deadlines change: always re-check on the funder's page before submitting.</li></ul></div>`}
+function vMideast(){const live=S.opps.filter(o=>state(o)!=='closed'),me=live.filter(isME).sort((a,b)=>sortKey(a)-sortKey(b));
+  const used=new Set(),byC=ME_COUNTRIES.map(([n,fl,rx,note])=>{const L=me.filter(o=>rx.test((o.where||'')+' '+(o.title||'')));L.forEach(o=>used.add(o.id));return[n,fl,L,note]});
+  const gulf=me.filter(o=>GULF.includes(o.fc)&&!used.has(o.id)),region=me.filter(o=>!used.has(o.id)&&!GULF.includes(o.fc));
+  const glob=live.filter(o=>!isME(o)&&/global|worldwide|crisis countries|developing|ODA|LMIC|per country|per partner/i.test(o.where||'')).sort((a,b)=>sortKey(a)-sortKey(b));
+  const sec=(t,L,empty,note)=>`<div class="card" style="margin-top:14px"><h3>${t} <span class="note">· ${L.length}</span></h3>${note?`<p class="note" style="margin:2px 0 8px;background:#fffaf0;padding:6px 9px;border-radius:6px">${note}</p>`:''}${L.length?`<div class="agenda">${L.map(meRow).join('')}</div>`:`<p class="note">${empty||'Nothing listed yet. The weekly update adds new calls automatically.'}</p>`}</div>`;
+  return`<div class="head"><div><h2>📍 Middle East hub</h2><p>Your main region, with <b>Gaza/Palestine, Lebanon and Iraq first</b>: grants for work there and in Syria, Yemen, Jordan, Egypt and Türkiye, plus Gulf and Arab funders. Worldwide funders stay in <a href="#" data-act="go" data-v="grants">Find grants</a>; the global funds that also cover the Middle East are listed at the bottom.</p></div><button class="btn" data-act="meAll">See all in Find grants →</button></div>
+  <div class="grid g4">${[['Middle East opportunities',me.length,'live, incl. Gulf & Arab funders'],['UK charity can apply directly',me.filter(o=>o.uk==='direct').length,'no partner needed'],['OCHA pooled funds',me.filter(o=>/Humanitarian Fund/.test(o.funder||'')).length,'Syria · Lebanon · oPt · Yemen'],['Gulf & Arab funders',me.filter(o=>GULF.includes(o.fc)||/AGFUND|OPEC|IsDB|Islamic/.test(o.funder||'')).length,'relationship-led']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  <div class="card" style="margin-top:14px;background:#fffaf0;border-color:#f3d39a"><h3>Getting funded in the Middle East: first steps</h3><ol style="margin:6px 0 0 18px;line-height:1.7">
+   <li><b>Register on the UN Partner Portal</b> and OCHA's <b>Grant Management System</b>, then get the <b>capacity assessment</b> done for each country fund (Syria, Lebanon, oPt, Yemen). It takes weeks, so do it before allocations open.</li>
+   <li><b>Join the health cluster</b> in each country you work in. Pooled-fund allocations are prioritised through the clusters.</li>
+   <li><b>Gulf funders are relationship-led:</b> short Arabic + English concept note, an introduction or visit, visibility plan, and Zakat-eligible budgets where it fits.</li>
+   <li><b>Local partners:</b> many calls (Australia DAP, Canada CFLI, Japan GGP, WPHF) are for locally registered organisations, so register in-country or co-apply with a local partner.</li>
+   <li><b>Sanctions & compliance:</b> for Syria, Gaza and parts of Yemen, check current UK (OFSI) and US (OFAC) sanctions guidance and humanitarian exemptions, and keep partner vetting and audit files ready.</li></ol></div>
+  ${byC.map(([n,fl,L,note])=>sec(fl+' '+n,L,'No country-specific call listed right now. Use the region-wide and global funds below.',note)).join('')}
+  ${sec('🕌 Gulf & Arab funders',gulf)}
+  ${sec('🌐 Region-wide funds covering the Middle East',region)}
+  ${sec('🌍 Global funds that also cover the Middle East',glob.slice(0,15))}`}
+const AGG_RX=/fundsforngos|opportunitydesk|triple-funds|africanngos|developmentaid|jobs\.ps|opportunitiesforyouth|o4af|terravivagrants|scholarshipbob|opportunitiesfeed/i;
+const HIGHRISK_RX=/syria|gaza|palestin|west bank|yemen|iraq|lebanon|afghanistan|sudan|iran|somalia|libya/i;
+const ageDays=d=>d?Math.round((Date.parse(todayISO)-Date.parse(d))/864e5):999;
+function trustTags(o){const t=[];
+  if(o.review)t.push(`<span class="tag" style="background:#eef4ff;color:#1d4ed8;border-color:#bfd2ff">🆕 Added automatically: needs a team check</span>`);
+  if(o.verify==='unconfirmed')t.push(`<span class="tag" style="background:#fdecec;color:#a11;border-color:#f3b4b4">⚠ Not confirmed on the funder's own site: check before investing time</span>`);
+  else if(o.verified)t.push(`<span class="tag" style="background:#e9f7ef;color:#17663a;border-color:#b6e2c6">✔ Checked against official sources ${fmtS(o.verified)}</span>`);
+  if(AGG_RX.test(o.url||'')&&!o.applyUrl)t.push(`<span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">Link is a listing site: confirm on the funder's page</span>`);
+  if(ageDays(o.checked)>21)t.push(`<span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">Not re-checked for ${ageDays(o.checked)} days</span>`);
+  if(HIGHRISK_RX.test(o.where||''))t.push(`<a href="#" class="tag" data-act="go" data-v="compliance" style="text-decoration:none">⚖️ High-risk area: sanctions & partner checks</a>`);
+  return t.length?`<div style="margin-top:6px">${t.join('')}</div>`:''}
+const trustOK=o=>!o.review&&o.verify!=='unconfirmed';
+let dls=null;function showCSV(csv,name,label){
+  $('#box').innerHTML=`<h2>Export: ${esc(label)}</h2><p class="note">Download the file (opens in Excel or Google Sheets), or copy the text below.</p><div style="display:flex;gap:8px;margin:8px 0">${dls?`<button class="btn pri" data-act="dlCSV" data-n="${name}">⬇ Download ${name}</button>`:''}<button class="btn" data-act="cpCSV">⧉ Copy</button><button class="btn" data-act="close">Close</button></div><textarea id="csvTxt" rows="10" style="width:100%;font-family:monospace;font-size:12px" readonly>${esc(csv)}</textarea>`;$('#modal').classList.add('on')}
+function oppCard(o){const a=appFor(o.id),ap=o.applyUrl||o.url;return`<article class="opp">${badge(o)}
+   <div><h3>${esc(o.title)}</h3><div class="note" style="margin-top:2px">${flag(o.fc)} ${esc(o.funder)}${isME(o)?' <span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">📍 Middle East</span>':''}</div>
+    <div class="gs">💰 Grant size: ${grantSize(o)}</div>
+    <dl class="facts"><dt>Where</dt><dd>${esc(o.where)}</dd><dt>Who can apply</dt><dd>${esc(o.eligibility)}</dd></dl>
+    <div style="margin-top:7px">${ukTag(o)}<span class="tag">${esc(o.type)}</span>${(o.focus||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>${trustTags(o)}
+    ${o.applyHow?`<div class="how"><b>How to apply:</b> ${esc(o.applyHow)}</div>`:''}
+    ${o.ukNote?`<div class="uk"><b>For a UK charity:</b> ${esc(o.ukNote)}</div>`:''}${o.notes?`<div class="note">${esc(o.notes)}</div>`:''}</div>
+   <div style="display:flex;flex-direction:column;gap:7px">
+    <a class="btn pri" href="${esc(ap)}" target="_blank" rel="noopener">${state(o)==='open'||state(o)==='rolling'?'Apply / application page ↗':'Go to funder page ↗'}</a>
+    ${o.applyUrl&&o.applyUrl!==o.url?`<a class="btn" href="${esc(o.url)}" target="_blank" rel="noopener">Call details ↗</a>`:''}
+    ${a?`<button class="btn" data-act="openApp" data-id="${a.id}">Open workspace →</button><div class="note">Stage: <b>${esc(a.stage)}</b></div>`:`<button class="btn" data-act="startApp" data-id="${esc(o.id)}">＋ Track & prepare</button>`}
+    ${o.review?`<button class="btn sm" data-act="reviewOpp" data-id="${esc(o.id)}">✔ Mark as checked</button>`:''}
+    <div class="note">Source: ${esc(o.source||'—')}${o.checked?' · checked '+fmtS(o.checked):''}</div></div></article>`;
+}
+
+// ================= applications =================
+function newApp(o){const deadline=o&&o.deadline&&days(o.deadline)>0?o.deadline:addDays(todayISO,45);
+  return{oppId:o?o.id:'',title:o?o.title:'New application',funder:o?o.funder:'',deadline,stage:'Prospect',amount:'',currency:'GBP',owner:'',portal:o?(o.applyUrl||o.url):'',ref:'',
+   project:{title:'',countries:'',population:'',duration:'',summary:''},
+   milestones:MILESTONES.map(([n,off])=>({id:uid(),name:n,date:addDays(deadline,off)<todayISO?todayISO:addDays(deadline,off),done:false,owner:''})),
+   checklist:APP_DOCS.map(n=>({name:n,done:false})),sections:{},submitted:'',decisionDate:'',awarded:'',start:'',end:'',reports:[],notes:'',created:todayISO}}
+function progress(a){const m=a.milestones||[];return m.length?Math.round(m.filter(x=>x.done).length/m.length*100):0}
+function nextMs(a){return(a.milestones||[]).filter(m=>!m.done).sort((x,y)=>x.date.localeCompare(y.date))[0]}
+function stageTag(s){const c={Awarded:'g',Rejected:'r',Withdrawn:'',Submitted:'b',Clarifications:'b'}[s]??'a';return`<span class="tag ${c}">${esc(s)}</span>`}
+
+function vApplications(){
+  if(detail)return vAppDetail(findApp(detail));
+  const act=S.apps.filter(a=>KANBAN.includes(a.stage));
+  return`<div class="head"><div><h2>Applications</h2><p>Every grant you're preparing, with its timeline. Click a card to open the workspace.</p></div><button class="btn pri" data-act="blankApp">＋ New application</button></div>
+  ${act.length?`<div class="kanban">${KANBAN.map(s=>{const L=act.filter(a=>a.stage===s).sort((x,y)=>(x.deadline||'').localeCompare(y.deadline||''));
+   return`<div class="col"><h4><span>${s}</span><span>${L.length}</span></h4>${L.map(a=>{const n=a.deadline?days(a.deadline):null;const nm=nextMs(a);return`<div class="kc" data-act="openApp" data-id="${a.id}"><b>${esc(a.title)}</b><span class="note">${esc(a.funder)}</span>
+    <div style="margin:6px 0 4px" class="pbar"><i style="width:${progress(a)}%"></i></div>
+    <div class="note" style="margin:0">${a.deadline?`Deadline ${fmtS(a.deadline)} · <b style="color:${n<=7?'var(--red)':n<=21?'var(--amber)':'inherit'}">${n}d</b>`:''}${a.amount?' · '+money(a.amount,a.currency):''}</div>
+    ${nm&&ACTIVE.includes(a.stage)?`<div class="note" style="margin:3px 0 0">Next: ${esc(nm.name)} (${fmtS(nm.date)})</div>`:''}</div>`}).join('')}</div>`}).join('')}</div>`
+   :`<div class="empty">No applications yet. Go to <a href="#" data-act="go" data-v="grants">Find grants</a> and click <b>Start application</b>.</div>`}`;
+}
+
+function vAppDetail(a){
+  if(!a)return`<div class="empty">Application not found.</div>`;
+  const t=sub.appTab||'timeline',o=findOpp(a.oppId);
+  const inp=(k,label,type='text',extra='')=>`<div><label class="f">${label}</label><input type="${type}" value="${esc(a[k]??'')}" data-af="${k}" ${extra}></div>`;
+  let body='';
+  if(t==='timeline'){const ms=[...(a.milestones||[])].sort((x,y)=>x.date.localeCompare(y.date));
+   body=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>Timeline to deadline: ${fmtD(a.deadline)}</h3><div style="display:flex;gap:6px"><button class="btn sm" data-act="rebuildMs">↻ Re-plan from deadline</button><button class="btn sm" data-act="addMs">＋ Milestone</button></div></div>
+   <div style="margin:10px 0" class="pbar"><i style="width:${progress(a)}%"></i></div>
+   ${a.deadline&&days(a.deadline)<42&&ACTIVE.includes(a.stage)?`<div class="banner" style="margin:0 0 6px">Only ${days(a.deadline)} days to the deadline: the standard 6-week plan is compressed. Prioritise go/no-go, budget and sign-off.</div>`:''}
+   ${ms.map(m=>`<div class="ms ${m.done?'done':''} ${!m.done&&m.date<todayISO?'late':''}"><input type="checkbox" ${m.done?'checked':''} data-ms="${m.id}" data-k="done"><input type="text" class="nm" value="${esc(m.name)}" data-ms="${m.id}" data-k="name" style="border-color:transparent"><input type="date" class="dt" value="${m.date}" data-ms="${m.id}" data-k="date"><input type="text" placeholder="Owner" value="${esc(m.owner||'')}" data-ms="${m.id}" data-k="owner"></div>`).join('')}</div>`}
+  if(t==='proposal'){const p=a.project||{};
+   body=`<div class="card" style="margin-bottom:14px"><h3>Project brief</h3><p class="note">Fill this in first. The AI drafting uses it, together with the grant details and your organisation profile.</p>
+    <div class="grid g2"><div><label class="f">Project title</label><input type="text" value="${esc(p.title||'')}" data-pf="title"></div><div><label class="f">Countries / locations</label><input type="text" value="${esc(p.countries||'')}" data-pf="countries"></div>
+    <div><label class="f">Target population & numbers</label><input type="text" value="${esc(p.population||'')}" data-pf="population"></div><div><label class="f">Duration</label><input type="text" value="${esc(p.duration||'')}" data-pf="duration" placeholder="e.g. 12 months"></div></div>
+    <label class="f">What you will do (key facts, services, supplies, partners)</label><textarea data-pf="summary" rows="4">${esc(p.summary||'')}</textarea></div>
+    ${SECTIONS.map(([k,n,g])=>{const v=(a.sections||{})[k]||'';return`<div class="sec card"><div class="sh"><div><h4>${n}</h4><div class="wc">${esc(g)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="wc">${v.trim()?v.trim().split(/\s+/).length:0} words</span>${sample?`<button class="btn sm ai" data-act="draft" data-k="${k}">✨ Draft with Claude</button>`:''}</div></div><textarea rows="7" data-sec="${k}" id="sec-${k}">${esc(v)}</textarea></div>`}).join('')}
+    <div style="display:flex;gap:8px"><button class="btn pri" data-act="copyProp">⧉ Copy full proposal</button>${sample?'':'<span class="note">AI drafting is available when you open this page signed in on claude.ai.</span>'}</div>`}
+  if(t==='docs'){const lib={};DOC_LIB.forEach(([g,L])=>L.forEach(n=>lib[n]=1));
+   body=`<div class="card"><h3>Documents for this application</h3><p class="note">Tick when attached or ready. Add the extra annexes this funder asks for.</p>
+   ${(a.checklist||[]).map((c,i)=>`<label class="chk"><input type="checkbox" ${c.done?'checked':''} data-ck="${i}"><span style="flex:1">${esc(c.name)}</span><button class="btn sm ghost" data-act="rmCk" data-i="${i}">✕</button></label>`).join('')}
+   <div style="display:flex;gap:8px;margin-top:10px"><input type="text" id="newCk" placeholder="Add a document the funder requires…"><button class="btn" data-act="addCk">Add</button></div>
+   <p class="note" style="margin-top:12px">Keep master copies up to date in <a href="#" data-act="go" data-v="readiness">Organisation & documents</a>.</p></div>`}
+  if(t==='award'){const R=a.reports||[];
+   body=`<div class="grid g2"><div class="card"><h3>Submission & decision</h3>
+    <div class="grid g2" style="gap:8px">${inp('submitted','Date submitted','date')}${inp('ref','Funder reference / portal ID')}${inp('decisionDate','Decision date','date')}${inp('awarded','Amount awarded','number')}${inp('start','Grant start','date')}${inp('end','Grant end','date')}</div></div>
+    <div class="card"><h3>Reporting & compliance deadlines</h3><p class="note">For awarded grants: narrative & financial reports, audits, no-cost extensions.</p>
+    ${R.map((r,i)=>`<div class="ms ${r.done?'done':''} ${!r.done&&r.due<todayISO?'late':''}" style="grid-template-columns:24px 1fr 140px 30px"><input type="checkbox" ${r.done?'checked':''} data-rp="${i}" data-k="done"><input type="text" class="nm" value="${esc(r.type)}" data-rp="${i}" data-k="type"><input type="date" class="dt" value="${r.due}" data-rp="${i}" data-k="due"><button class="btn sm ghost" data-act="rmRp" data-i="${i}">✕</button></div>`).join('')||'<p class="note">No reporting deadlines yet.</p>'}
+    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn sm" data-act="addRp" data-t="Interim narrative & financial report">＋ Interim report</button><button class="btn sm" data-act="addRp" data-t="Final narrative & financial report">＋ Final report</button><button class="btn sm" data-act="addRp" data-t="Audit / expenditure verification">＋ Audit</button><button class="btn sm" data-act="addRp" data-t="Other deadline">＋ Other</button></div></div></div>`}
+  if(t==='notes')body=`<div class="card"><h3>Notes, contacts & lessons learned</h3><textarea rows="12" data-af="notes">${esc(a.notes||'')}</textarea></div>`;
+  return`<button class="back" data-act="go" data-v="applications">← All applications</button>
+  <div class="head"><div><h2>${esc(a.title)}</h2><p>${esc(a.funder)}${o?` · <a href="${esc(o.url)}" target="_blank" rel="noopener">funder page ↗</a>`:''}${o&&o.ukNote?` · ${esc(o.ukNote)}`:''}</p>${o?`<div class="gs" style="max-width:760px">💰 Grant size: ${grantSize(o)}${o.applyHow?`<div class="how"><b>How to apply:</b> ${esc(o.applyHow)}</div>`:''}</div>`:''}</div>
+   <div style="display:flex;gap:8px">${a.portal?`<a class="btn pri" href="${esc(a.portal)}" target="_blank" rel="noopener">Open submission portal ↗</a>`:''}<button class="btn" data-act="delApp">Delete</button></div></div>
+  <div class="card"><div class="grid g4" style="gap:10px">
+   <div><label class="f">Stage</label><select data-af="stage">${STAGES.map(s=>`<option ${a.stage===s?'selected':''}>${s}</option>`).join('')}</select></div>
+   ${inp('deadline','Deadline','date')}
+   <div><label class="f">Amount requested</label><div style="display:flex;gap:5px"><input type="number" value="${esc(a.amount)}" data-af="amount"><select data-af="currency" style="width:86px">${CURS.map(c=>`<option ${a.currency===c?'selected':''}>${c}</option>`).join('')}</select></div></div>
+   ${inp('owner','Lead / owner')}
+   <div style="grid-column:span 2">${inp('title','Application title')}</div>${inp('funder','Funder')}${inp('portal','Submission portal / link','url')}
+  </div></div>
+  <div class="tabs2">${[['timeline','Timeline'],['proposal','Proposal writer'],['docs','Documents'],['award','Submission & reporting'],['notes','Notes']].map(x=>`<button class="${t===x[0]?'on':''}" data-act="appTab" data-t="${x[0]}">${x[1]}</button>`).join('')}</div>${body}`;
+}
+
+// ================= timeline =================
+function events(horizon){const ev=[];
+  S.apps.forEach(a=>{if(ACTIVE.includes(a.stage)){(a.milestones||[]).filter(m=>!m.done).forEach(m=>ev.push({date:m.date,what:m.name,app:a,kind:'Milestone'}));if(a.deadline)ev.push({date:a.deadline,what:'DEADLINE',app:a,kind:'Deadline'})}
+   (a.reports||[]).filter(r=>!r.done&&r.due).forEach(r=>ev.push({date:r.due,what:r.type,app:a,kind:'Report'}))});
+  S.funders.filter(f=>f.nextDate&&!/Committed|Declined/.test(f.stage)).forEach(f=>ev.push({date:f.nextDate,what:f.next||'Follow up',app:{id:'',title:f.name},funder:f,kind:'Funder'}));
+  return ev.filter(e=>!horizon||days(e.date)<=horizon).sort((x,y)=>x.date.localeCompare(y.date))}
+function gantt(){const apps=S.apps.filter(a=>ACTIVE.includes(a.stage)||(a.stage==='Awarded'&&(a.reports||[]).some(r=>!r.done)));
+  if(!apps.length)return`<div class="empty">Nothing on the timeline yet. Start an application from <a href="#" data-act="go" data-v="grants">Find grants</a>.</div>`;
+  const start=addDays(todayISO,-7);const allD=apps.flatMap(a=>[a.deadline,...(a.milestones||[]).map(m=>m.date),...(a.reports||[]).map(r=>r.due)]).filter(Boolean);
+  let end=allD.sort().pop();if(!end||days(end)<60)end=addDays(todayISO,60);if(days(end)>270)end=addDays(todayISO,270);
+  const span=(new Date(end)-new Date(start))/864e5,L=230,W=1000,RH=34,top=30,H=top+apps.length*RH+10;
+  const x=d=>L+Math.max(0,Math.min(1,((new Date(d)-new Date(start))/864e5)/span))*(W-L-10);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Application timeline">`;
+  for(let d=new Date(start);d<=new Date(end);d.setDate(d.getDate()+1)){if(d.getDate()===1){const X=x(iso(d));s+=`<line x1="${X}" x2="${X}" y1="${top-6}" y2="${H}" stroke="#e3e8e6"/><text x="${X+3}" y="${top-10}" font-size="11" fill="#7a8886">${d.toLocaleDateString(undefined,{month:'short',year:'2-digit'})}</text>`}}
+  apps.forEach((a,i)=>{const y=top+i*RH+RH/2;const ms=a.milestones||[];const st=ms.map(m=>m.date).sort()[0]||a.created||todayISO;
+   s+=`<text x="4" y="${y+4}" font-size="12" fill="#14211f">${esc(a.title.length>32?a.title.slice(0,31)+'…':a.title)}</text>`;
+   if(ACTIVE.includes(a.stage)&&a.deadline){s+=`<rect x="${x(st)}" y="${y-5}" width="${Math.max(2,x(a.deadline)-x(st))}" height="10" rx="5" fill="#cfe7e4"/>`;
+    ms.forEach(m=>{s+=`<circle cx="${x(m.date)}" cy="${y}" r="5" fill="${m.done?'#0b6e69':m.date<todayISO?'#c9372c':'#fff'}" stroke="#0b6e69" stroke-width="1.5"><title>${esc(m.name)} · ${fmtD(m.date)}${m.done?' ✓':''}</title></circle>`});
+    s+=`<path d="M${x(a.deadline)} ${y-8} l7 8 l-7 8 l-7 -8z" fill="#c9372c"><title>Deadline ${fmtD(a.deadline)}</title></path>`}
+   (a.reports||[]).filter(r=>r.due).forEach(r=>{s+=`<rect x="${x(r.due)-5}" y="${y-5}" width="10" height="10" fill="${r.done?'#0b6e69':'#2b5fa8'}" transform="rotate(45 ${x(r.due)} ${y})"><title>${esc(r.type)} · ${fmtD(r.due)}</title></rect>`})});
+  const T=x(todayISO);s+=`<line x1="${T}" x2="${T}" y1="${top-6}" y2="${H}" stroke="#c9372c" stroke-dasharray="3 3"/><text x="${T+3}" y="${H-2}" font-size="10.5" fill="#c9372c">today</text></svg>`;
+  return`<div class="card gantt">${s}<div class="note" style="margin-top:6px">● milestone (filled = done, red = overdue) · ◆ red = submission deadline · ◆ blue = report due</div></div>`}
+function agenda(ev){return ev.length?`<div class="agenda">${ev.map(e=>{const n=days(e.date);return`<div class="row"><b style="color:${n<0?'var(--red)':n<=7?'var(--amber)':'inherit'}">${fmtS(e.date)}</b><div>${e.kind==='Deadline'?'<span class="tag r">Deadline</span>':e.kind==='Report'?'<span class="tag b">Report</span>':e.kind==='Funder'?'<span class="tag g">Funder</span>':''}${esc(e.what)}<div class="note" style="margin:0">${esc(e.app.title)}</div></div>${e.funder?`<button class="btn sm" data-act="editFunder" data-id="${e.funder.id}">Open</button>`:`<button class="btn sm" data-act="openApp" data-id="${e.app.id}">Open</button>`}</div>`}).join('')}</div>`:'<p class="note">Nothing due.</p>'}
+function vTimeline(){return`<div class="head"><div><h2>Timeline</h2><p>All active applications and reporting deadlines on one calendar.</p></div></div>${gantt()}
+  <div class="card" style="margin-top:14px"><h3>Next 60 days</h3>${agenda(events(60))}</div>`}
+
+// ================= register =================
+function vRegister(){const R=S.apps.filter(a=>!ACTIVE.includes(a.stage)).sort((x,y)=>(y.submitted||y.created||'').localeCompare(x.submitted||x.created||''));
+  const req=R.filter(a=>a.stage!=='Withdrawn').reduce((s,a)=>s+gbp(a.amount,a.currency),0),aw=R.filter(a=>a.stage==='Awarded'),awv=aw.reduce((s,a)=>s+gbp(a.awarded||a.amount,a.currency),0);
+  const dec=R.filter(a=>a.stage==='Awarded'||a.stage==='Rejected').length,pend=R.filter(a=>a.stage==='Submitted'||a.stage==='Clarifications');
+  return`<div class="head"><div><h2>Applied & awarded</h2><p>Register of everything you've submitted, decisions, and grants you're managing. Amounts in GBP at indicative rates.</p></div><button class="btn" data-act="csv">⬇ Export (CSV)</button></div>
+  <div class="grid g4" style="margin-bottom:14px">${[['Applications submitted',R.filter(a=>a.stage!=='Withdrawn').length,short(req)+' requested'],['Awaiting decision',pend.length,short(pend.reduce((s,a)=>s+gbp(a.amount,a.currency),0))],['Awarded',aw.length,short(awv)],['Success rate',dec?Math.round(aw.length/dec*100)+'%':'—',dec+' decided']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  ${R.length?`<div class="card scroll" style="padding:4px 8px"><table><tr><th>Application</th><th>Stage</th><th>Submitted</th><th class="num">Requested</th><th class="num">Awarded</th><th>Grant period</th><th>Next report</th></tr>
+  ${R.map(a=>{const nr=(a.reports||[]).filter(r=>!r.done&&r.due).sort((x,y)=>x.due.localeCompare(y.due))[0];return`<tr class="click" data-act="openApp" data-id="${a.id}"><td><b>${esc(a.title)}</b><div class="note" style="margin:0">${esc(a.funder)}${a.ref?' · Ref '+esc(a.ref):''}</div></td><td>${stageTag(a.stage)}</td><td>${fmtD(a.submitted)}</td><td class="num">${a.amount?money(a.amount,a.currency):'—'}</td><td class="num">${a.stage==='Awarded'?money(a.awarded||a.amount,a.currency):'—'}</td><td>${a.start?fmtS(a.start)+' – '+fmtD(a.end):'—'}</td><td>${nr?`<span style="color:${days(nr.due)<14?'var(--red)':'inherit'}">${fmtD(nr.due)}</span><div class="note" style="margin:0">${esc(nr.type)}</div>`:'—'}</td></tr>`}).join('')}</table></div>`
+  :`<div class="empty">When you move an application to <b>Submitted</b>, it appears here.</div>`}`}
+
+// ================= readiness =================
+const docKey=n=>n.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,60);
+function readiness(){const all=DOC_LIB.flatMap(x=>x[1]);const r=all.filter(n=>(S.docs[docKey(n)]||{}).status==='Ready'&&!((S.docs[docKey(n)]||{}).expiry&&S.docs[docKey(n)].expiry<todayISO)).length;return{r,t:all.length,p:Math.round(r/all.length*100)}}
+function vReadiness(){const p=S.settings.org||{},R=readiness();
+  return`<div class="head"><div><h2>Organisation & documents</h2><p>Your organisation profile (used to draft proposals) and the due-diligence documents institutional donors ask for. Keep these current and every application gets faster.</p></div></div>
+  <div class="grid g2"><div class="card"><h3>Organisation profile</h3>
+   <div class="grid g2" style="gap:8px">${[['name','Organisation name'],['charity','UK charity number'],['founded','Year founded'],['income','Annual income (GBP)'],['countries','Countries of operation'],['sectors','Sectors (e.g. primary health, surgery, MHPSS)']].map(([k,l])=>`<div><label class="f">${l}</label><input type="text" value="${esc(p[k]||'')}" data-org="${k}"></div>`).join('')}</div>
+   <label class="f">Mission & approach</label><textarea data-org="mission" rows="3">${esc(p.mission||'')}</textarea>
+   <label class="f">Key achievements & track record (numbers, past donors)</label><textarea data-org="track" rows="4">${esc(p.track||'')}</textarea></div>
+   <div class="card"><h3>Donor readiness</h3><div style="font-size:34px;font-weight:700;margin-top:6px">${R.p}%</div><div class="note">${R.r} of ${R.t} documents ready and in date</div><div class="pbar" style="margin:10px 0"><i style="width:${R.p}%"></i></div>
+   <p class="note">Most institutional donors (FCDO, EU, UN agencies, large foundations) ask for the Legal, Finance and Policies items during due diligence. The Registrations items open access to specific funders.</p>
+   ${DOC_LIB.map(([g,L])=>{const r=L.filter(n=>(S.docs[docKey(n)]||{}).status==='Ready').length;return`<div style="display:flex;justify-content:space-between;font-size:13px;margin-top:6px"><span>${g}</span><span>${r}/${L.length}</span></div><div class="pbar"><i style="width:${r/L.length*100}%"></i></div>`}).join('')}</div></div>
+  ${DOC_LIB.map(([g,L])=>`<div class="card" style="margin-top:14px"><h3>${g}</h3><div class="docrow note" style="font-weight:600"><span>Document</span><span>Status</span><span>Valid until</span><span>Location / link</span></div>
+   ${L.map(n=>{const k=docKey(n),d=S.docs[k]||{},exp=d.expiry&&d.expiry<todayISO;return`<div class="docrow"><span>${esc(n)}${exp?' <span class="tag r">expired</span>':''}</span>
+    <select data-doc="${k}" data-k="status" class="st-${(d.status||'Missing')==='Ready'?'ready':(d.status==='Needs update'?'update':'missing')}">${['Missing','Needs update','Ready','Not applicable'].map(s=>`<option ${(d.status||'Missing')===s?'selected':''}>${s}</option>`).join('')}</select>
+    <input type="date" value="${d.expiry||''}" data-doc="${k}" data-k="expiry"><input type="text" value="${esc(d.link||'')}" placeholder="e.g. SharePoint link" data-doc="${k}" data-k="link"></div>`}).join('')}</div>`).join('')}`}
+
+// ================= supplies =================
+function vSupplies(t){t=t||'needs';
+  let body='';
+  if(t==='needs'){const L=[...S.supplies].sort((x,y)=>(x.needBy||'9').localeCompare(y.needBy||'9'));const tot=L.filter(s=>s.status!=='Distributed').reduce((s,x)=>s+gbp((+x.cost||0),x.currency||'GBP'),0);
+   body=`<div class="grid g4" style="margin-bottom:14px">${SUP_STATUS.slice(0,4).map(s=>`<div class="card kpi"><div class="l">${s}</div><div class="n">${L.filter(x=>x.status===s).length}</div></div>`).join('')}</div>
+   <div class="bar"><button class="btn pri" data-act="addSup">＋ Add item</button><span class="note">Open items est. value: <b>${short(tot)}</b>. Link items to a grant so supply costs go into the budget.</span></div>
+   ${L.length?`<div class="card scroll" style="padding:4px 8px"><table><tr><th>Item</th><th>Category</th><th class="num">Qty</th><th>Project / location</th><th>Source</th><th>Needed by</th><th class="num">Est. cost</th><th>Status</th><th></th></tr>
+   ${L.map(s=>`<tr><td><b>${esc(s.item)}</b>${s.spec?`<div class="note" style="margin:0">${esc(s.spec)}</div>`:''}${s.expiry?`<div class="note" style="margin:0">Expiry ${fmtD(s.expiry)}</div>`:''}</td><td>${esc(s.cat)}</td><td class="num">${esc(s.qty)} ${esc(s.unit||'')}</td><td>${esc(s.project||'')}${s.appId&&findApp(s.appId)?`<div class="note" style="margin:0">Grant: ${esc(findApp(s.appId).title)}</div>`:''}</td><td>${esc(s.source||'')}</td><td>${fmtD(s.needBy)}</td><td class="num">${s.cost?money(s.cost,s.currency||'GBP'):'—'}</td>
+    <td><select data-sup="${s.id}" data-k="status">${SUP_STATUS.map(x=>`<option ${s.status===x?'selected':''}>${x}</option>`).join('')}</select></td><td><button class="btn sm" data-act="editSup" data-id="${s.id}">Edit</button></td></tr>`).join('')}</table></div>`
+   :`<div class="empty">No items yet. Add the medicines, consumables, kits and equipment your projects need, then track them from request to distribution.</div>`}`}
+  if(t==='sources')body=SOURCES.map(g=>`<h3 style="margin:18px 0 10px">${g.g}</h3><div class="grid g3">${g.items.map(([n,r,d,u,tip])=>`<div class="src"><span class="tag">${esc(r)}</span><h4>${esc(n)}</h4><div style="font-size:13px">${esc(d)}</div>${tip?`<div class="note">${esc(tip)}</div>`:''}<div style="margin-top:9px"><a class="btn sm" href="${u}" target="_blank" rel="noopener">Website ↗</a></div></div>`).join('')}</div>`).join('')+`<p class="note" style="margin-top:14px">Donation programmes have their own partner criteria (usually a registered nonprofit with licensed health facilities or staff). Check current terms on each website.</p>`;
+  if(t==='quality'){const done=S.settings.supcheck||{};body=`<div class="card"><h3>Quality & compliance checklist for medicines and equipment</h3><p class="note">Based on WHO guidance for medicine and medical-device donations. Tick what your organisation has in place.</p>
+   ${SUP_CHECK.map((c,i)=>`<label class="chk"><input type="checkbox" ${done[i]?'checked':''} data-supck="${i}"><span>${esc(c)}</span></label>`).join('')}
+   <p class="note" style="margin-top:10px">Reference: <a href="https://www.who.int/publications/i/item/9789241501989" target="_blank" rel="noopener">WHO Guidelines for medicine donations (2010)</a> · <a href="https://www.who.int/publications/i/item/9789241501408" target="_blank" rel="noopener">WHO Medical device donations: considerations</a></p></div>`}
+  const H={needs:['Supplies & equipment needs','Plan and track the medicines, consumables, kits and equipment your programmes need, from request to distribution.'],sources:['Where to get medical supplies','Donated medicines and equipment, not-for-profit suppliers, WHO emergency kits, and equipment & cold-chain standards.'],quality:['Quality & compliance','What a medical NGO needs in place to source, ship, store and use medicines and equipment safely.']}[t];
+  return`<div class="head"><div><h2>${H[0]}</h2><p>${H[1]}</p></div></div>${body}`}
+function supForm(s){s=s||{cat:SUP_CATS[0],status:'Needed',currency:'GBP'};
+  $('#box').innerHTML=`<h2>${s.id?'Edit item':'Add supply item'}</h2>
+  <div class="grid g2" style="gap:8px"><div style="grid-column:span 2"><label class="f">Item</label><input type="text" id="sI" value="${esc(s.item||'')}" placeholder="e.g. Amoxicillin 250mg dispersible tablets"></div>
+  <div><label class="f">Category</label><select id="sC">${SUP_CATS.map(c=>`<option ${s.cat===c?'selected':''}>${c}</option>`).join('')}</select></div><div><label class="f">Specification / strength</label><input type="text" id="sSp" value="${esc(s.spec||'')}"></div>
+  <div><label class="f">Quantity</label><input type="text" id="sQ" value="${esc(s.qty||'')}"></div><div><label class="f">Unit</label><input type="text" id="sU" value="${esc(s.unit||'')}" placeholder="boxes of 1000, kits, units"></div>
+  <div><label class="f">Project / location</label><input type="text" id="sP" value="${esc(s.project||'')}"></div><div><label class="f">Needed by</label><input type="date" id="sN" value="${s.needBy||''}"></div>
+  <div><label class="f">Source / supplier</label><input type="text" id="sS" value="${esc(s.source||'')}" list="srcList"><datalist id="srcList">${SOURCES.flatMap(g=>g.items.map(i=>`<option value="${esc(i[0])}">`)).join('')}</datalist></div>
+  <div><label class="f">Linked grant application</label><select id="sA"><option value="">—</option>${S.apps.map(a=>`<option value="${a.id}" ${s.appId===a.id?'selected':''}>${esc(a.title)}</option>`).join('')}</select></div>
+  <div><label class="f">Estimated cost</label><div style="display:flex;gap:5px"><input type="number" id="sCo" value="${esc(s.cost||'')}"><select id="sCu" style="width:86px">${CURS.map(c=>`<option ${(s.currency||'GBP')===c?'selected':''}>${c}</option>`).join('')}</select></div></div>
+  <div><label class="f">Expiry date (if received)</label><input type="date" id="sE" value="${s.expiry||''}"></div>
+  <div><label class="f">Status</label><select id="sSt">${SUP_STATUS.map(x=>`<option ${s.status===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+  <div style="display:flex;gap:8px;justify-content:space-between;margin-top:14px">${s.id?`<button class="btn" data-act="delSup" data-id="${s.id}">Delete</button>`:'<span></span>'}<div style="display:flex;gap:8px"><button class="btn" data-act="close">Cancel</button><button class="btn pri" data-act="saveSup" data-id="${s.id||''}">Save</button></div></div>`;
+  $('#modal').classList.add('on')}
+
+// ================= funds =================
+const FUND_AMT={'Irish Aid: Representative Office of Ireland, Ramallah':'€42M Palestine envelope 2026 (shared)','Irish Aid Civil Society Fund':'€50,000 – €800,000 a year, up to 5 years','Irish NGOs as partners: GOAL, Concern, Trócaire, Christian Aid Ireland':'Sub-grants from a €100M/year scheme','UK FCDO: OPT and Lebanon teams':'£88M Gaza package; £127M Palestine budget 2026/27','EU ECHO: Palestine, Lebanon/Syria, Iraq':'€124.4M / €234.8M / €12M (2026)','Japan: embassy GGP grants (Palestine, Lebanon, Iraq)':'Up to ~US$135,000 per project','Czech, Polish, Canadian & Australian embassy small grants':'US$8,500 – 50,000 per project','KSrelief (King Salman Humanitarian Aid & Relief Centre)':'Not published: per partnership','Qatar Fund for Development (QFFD)':'Not published: per partnership','The Big Heart Foundation (Sharjah)':'Past grants ~US$0.3M–2M','AGFUND (Arab Gulf Programme for Development)':'Projects: not published · Prize: US$400k (international NGO category)','Islamic Development Bank (IsDB) & Lives and Livelihoods Fund':'US$2.5bn fund (to governments)','OPEC Fund for International Development':'Past NGO grants ~US$100k–500k','OCHA pooled funds: Syria, Lebanon, oPt, Yemen, Iraq':'Syria US$107M reserve allocation (Oct 2026) · oPt US$73.6M pledged 2026 · Lebanon US$65.6M allocated 2024','Takeda Global CSR Program':'US$22.2M awarded to 4 new partners in 2026 (multi-year)','Pharma & medtech product donation programmes':'In-kind: donated products','Pharma corporate foundations & access-to-medicine programmes':'Varies; usually multi-year, by invitation','Employee giving & corporate match funding':'Depends on employee gifts plus company match','Airlink':'In-kind: free or discounted air cargo & flights','Airbus Foundation':'In-kind airlift (funds Airlink: €7.5M over 4 years)','Google for Nonprofits / Ad Grants':'In-kind: free Workspace & search ads','Microsoft for Nonprofits':'In-kind: donated & discounted software','TechSoup network':'In-kind: software & hardware discounts','Souter Charitable Trust':'£1,000 – £3,000 one-off','Hilden Charitable Trust':'Not published: small grants','Beatrice Gilmore Trust':'£5,000 – £15,000 per project','BMA Giving':'Not published','Wellcome':'Varies: research grants, often £ millions','Children’s Investment Fund Foundation (CIFF)':'Large multi-year grants, by invitation','Vitol Foundation':'Not published','Disasters Emergency Committee (DEC)':'Shared appeal income: members only','Start Fund (Start Network)':'Typically £150,000 – £300,000 per crisis alert','OCHA Country-Based Pooled Funds':'Varies by country; ~US$1.05bn allocated in 2025','UN agency implementing partnerships':'Per partnership agreement','Philanthropy advisers & donor networks':'Varies','Gulf & Islamic institutional philanthropy':'Not published: per partnership','Bond (UK network for international development)':'Membership (fee): access to information and consortia','Global Health Cluster (WHO-led)':'Access route to pooled funds','Start Network membership':'Access to Start Fund (£150k–£300k per alert typical)','ICVA':'Membership network','Partnership for Quality Medical Donations (PQMD)':'In-kind: route to manufacturer donations'};
+function vFunds(){const f=sub.f||(sub.f={g:''});
+  return`<div class="head"><div><h2>Funding sources</h2><p>Institutional money beyond open grant calls: corporate & pharma partners, in-kind services, UK trusts that fund overseas health, emergency funding mechanisms and major-donor networks. Most of it comes through relationships, so click <b>Track</b> to add a funder to your relationship pipeline.</p></div><button class="btn" data-act="go" data-v="relations">Funder relationships →</button></div>
+  <div class="bar"><select data-ff="g"><option value="">All categories</option>${FUNDS.map(x=>`<option ${f.g===x.g?'selected':''}>${esc(x.g)}</option>`).join('')}</select></div>
+  ${FUNDS.filter(x=>!f.g||x.g===f.g).map(x=>`<h3 style="margin:18px 0 4px">${esc(x.g)}</h3><p class="note" style="margin:0 0 10px">${esc(x.d)}</p><div class="grid g3">${x.items.map(([n,t,r,d,u,tip])=>{const tr=S.funders.find(z=>z.name===n);return`<div class="src"><span class="tag">${esc(t)}</span><span class="tag">${esc(r)}</span><h4>${esc(n)}</h4>${FUND_AMT[n]?`<div class="gs" style="font-size:13px;padding:5px 9px">💰 <b style="font-size:13.5px">${esc(FUND_AMT[n])}</b></div>`:''}<div style="font-size:13px;margin-top:6px">${esc(d)}</div>${tip?`<div class="note"><b>How to access:</b> ${esc(tip)}</div>`:''}
+   <div style="margin-top:9px;display:flex;gap:6px"><a class="btn sm pri" href="${u}" target="_blank" rel="noopener">Go to funder ↗</a>${tr?`<button class="btn sm" data-act="editFunder" data-id="${tr.id}">Tracking: ${esc(tr.stage)}</button>`:`<button class="btn sm" data-act="trackFunder" data-n="${esc(n)}" data-t="${esc(t)}" data-u="${esc(u)}">＋ Track</button>`}</div></div>`}).join('')}</div>`).join('')}
+  <p class="note" style="margin-top:14px">Descriptions are a starting point. Check each funder's current priorities and how they accept approaches before contacting them.</p>`}
+function vRelations(){const L=S.funders;const open=L.filter(f=>!/Committed|Declined/.test(f.stage));const pipe=open.reduce((s,f)=>s+gbp(f.ask,f.currency),0),com=L.filter(f=>f.stage==='Committed').reduce((s,f)=>s+gbp(f.ask,f.currency),0);
+  const due=L.filter(f=>f.nextDate&&!/Committed|Declined/.test(f.stage)).sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+  return`<div class="head"><div><h2>Funder relationships</h2><p>Track corporate partners, foundations, trusts and major donors from first research to commitment, with the next action and date for each.</p></div><button class="btn pri" data-act="newFunder">＋ Add funder</button></div>
+  <div class="grid g4" style="margin-bottom:14px">${[['Active relationships',open.length,''],['Potential (open asks)',short(pipe),'GBP, indicative'],['Committed',short(com),L.filter(f=>f.stage==='Committed').length+' funders'],['Actions overdue',due.filter(f=>f.nextDate<todayISO).length,'need follow-up']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  ${L.length?`<div class="kanban" style="grid-template-columns:repeat(7,minmax(160px,1fr))">${REL_STAGES.map(st=>{const C=L.filter(f=>f.stage===st);return`<div class="col"><h4><span>${st}</span><span>${C.length}</span></h4>${C.map(f=>`<div class="kc" data-act="editFunder" data-id="${f.id}"><b>${esc(f.name)}</b><span class="note">${esc(f.type||'')}${f.ask?' · '+money(f.ask,f.currency||'GBP'):''}</span>${f.next?`<div class="note" style="margin:4px 0 0;color:${f.nextDate&&f.nextDate<todayISO?'var(--red)':'inherit'}">→ ${esc(f.next)}${f.nextDate?' ('+fmtS(f.nextDate)+')':''}</div>`:''}</div>`).join('')}</div>`}).join('')}</div>`
+  :`<div class="empty">No funders tracked yet. Browse <a href="#" data-act="go" data-v="funds">Funding sources</a> and click <b>＋ Track</b>, or add one yourself.</div>`}`}
+function funderForm(f){f=f||{stage:'Identified',currency:'GBP'};
+  $('#box').innerHTML=`<h2>${f.id?esc(f.name):'Add funder'}</h2>
+  <div class="grid g2" style="gap:8px"><div style="grid-column:span 2"><label class="f">Funder name</label><input type="text" id="fN" value="${esc(f.name||'')}"></div>
+  <div><label class="f">Type</label><select id="fT">${['Corporate','Corporate foundation','Trust','Foundation','Major donor / family office','Government','UN','Pooled fund','Logistics','Tech','Network','Other'].map(x=>`<option ${f.type===x?'selected':''}>${x}</option>`).join('')}</select></div>
+  <div><label class="f">Stage</label><select id="fS">${REL_STAGES.map(x=>`<option ${f.stage===x?'selected':''}>${x}</option>`).join('')}</select></div>
+  <div><label class="f">Contact person</label><input type="text" id="fC" value="${esc(f.contact||'')}"></div><div><label class="f">Contact email / phone</label><input type="text" id="fE" value="${esc(f.email||'')}"></div>
+  <div><label class="f">Ask / potential amount</label><div style="display:flex;gap:5px"><input type="number" id="fA" value="${esc(f.ask||'')}"><select id="fCu" style="width:86px">${CURS.map(c=>`<option ${(f.currency||'GBP')===c?'selected':''}>${c}</option>`).join('')}</select></div></div>
+  <div><label class="f">Relationship owner</label><input type="text" id="fO" value="${esc(f.owner||'')}"></div>
+  <div><label class="f">Next action</label><input type="text" id="fX" value="${esc(f.next||'')}" placeholder="e.g. Send 2-page concept note"></div><div><label class="f">Next action date</label><input type="date" id="fD" value="${f.nextDate||''}"></div>
+  <div><label class="f">Last contact</label><input type="date" id="fL" value="${f.last||''}"></div><div><label class="f">Website</label><input type="url" id="fU" value="${esc(f.url||'')}"></div>
+  <div style="grid-column:span 2"><label class="f">Interests, history & notes</label><textarea id="fNo" rows="4">${esc(f.notes||'')}</textarea></div></div>
+  <div style="display:flex;gap:8px;justify-content:space-between;margin-top:14px">${f.id?`<button class="btn" data-act="delFunder" data-id="${f.id}">Delete</button>`:'<span></span>'}<div style="display:flex;gap:8px"><button class="btn" data-act="close">Cancel</button><button class="btn pri" data-act="saveFunder" data-id="${f.id||''}">Save</button></div></div>`;
+  $('#modal').classList.add('on')}
+
+// ================= finance =================
+const INCOME_TYPES=['Individual donations (website)','Regular giving','Trusts & foundations','Corporate','Government / institutional (non-grant)','Earned income / social enterprise','Legacies','Investment income','Other'];
+const INVESTORS=[
+ {g:'Loans & social investment for UK charities',d:'Repayable finance to smooth cash flow (e.g. while waiting for grant payments), invest in growth or buy assets. Only borrow against income you are confident of.',items:[
+  ['CAF Venturesome Impact Fund','UK','£50,000 – £1,000,000 loans at 5.5% fixed, usually over 3–5 years; blended loan + grant for turnover under £500k','Mostly unsecured loans, standby facilities and blended finance for working capital and cash-flow management, new services, and organisational resilience. Always open.','https://www.cafonline.org/about-us/caf-venturesome','Short enquiry form. Needs at least 1 year of trading, turnover of £75k+, and a clear plan for how the finance makes you more sustainable.'],
+  ['CAF Bank secured loans','UK','£150,000 – £10M secured loans','Secured loans for UK-incorporated charities running for at least 3 years.','https://www.cafonline.org/services-for-charities/resources/help-grow-your-charity-impact-with-a-loan','Security required: charity assets may be at risk.'],
+  ['Charity Bank','UK','Not published here: loans assessed case by case','UK bank that only lends to charities and social-purpose organisations.','https://charitybank.org',''],
+  ['Social Investment Business','UK','Varies by fund','Loans and blended finance for UK charities and social enterprises.','https://www.sibgroup.org.uk','Check which funds are open.']]},
+ {g:'Health-sector investors & lenders',d:'For partner hospitals, clinics, pharmacies or a health social enterprise you set up to earn sustainable income.',items:[
+  ['Medical Credit Fund (PharmAccess)','Sub-Saharan Africa','Over €200M invested in nearly 2,000 healthcare providers in 5 African countries','Loans to small and medium private health facilities for equipment, infrastructure and service improvements, combined with quality-improvement and business support.','https://www.pharmaccess.org','Best for partner health facilities in Ghana, Kenya, Nigeria, Tanzania and similar markets.'],
+  ['Philips Foundation Impact Investments','Global (LMICs)','Early-stage investment: amounts not published','Invests in social entrepreneurs scaling better access to care, with Philips mentoring.','https://www.philips.com/a-w/about/philips-foundation.html','For a health social enterprise, not core NGO costs.']]},
+ {g:'Faith-based & Islamic social finance',d:'Zakat, Sadaqah and Waqf institutions fund health and relief where projects meet their eligibility rules.',items:[
+  ['Zakat & Waqf institutions','Global','Not published: per project','Many Gulf and UK Muslim institutions channel Zakat to eligible health and relief work.','https://www.ksrelief.org','Design Zakat-eligible projects (direct aid to eligible recipients) and keep Zakat funds ring-fenced.']]}
+];
+const COST_RULES=[['ECHO (EU humanitarian)',7,'Indirect costs max 7% of direct eligible costs. Field support costs (field office, security, logistics, studies) can be budgeted as DIRECT costs.'],['OCHA pooled funds / UN agency partnerships',7,'UN programme support costs are typically capped at 7%.'],['Horizon Europe',25,'Flat 25% of eligible direct costs (excluding subcontracting).'],['Foundation / other (edit %)',10,'Many foundations cap overheads around 10–15%. Check each funder’s policy.']];
+const SUST=['Reserves policy agreed by trustees (target months of core costs)','Monthly cash-flow forecast reviewed by the finance lead','At least 20–30% of income is unrestricted','No single funder gives more than ~30–40% of income','Full cost recovery: every grant budget includes support costs + indirect costs','Multi-currency bank accounts / FX plan for USD, EUR grants','Regular-giving and website donations growing (unrestricted base)','Legacy giving promoted to supporters','Earned income explored (training, technical advice, cost-recovery services)','Pre-financing negotiated with donors (advance payments, not only reimbursements)','Standby facility or loan option in place for cash-flow gaps','Audit-ready accounts & grant reporting on time (protects future funding)'];
+
+function finCalc(){const F=S.settings.fin||{},cash=+F.cash||0,mon=+F.monthly||0,tgt=+F.target||6,icr=+F.icr||7,lines=F.lines||[];
+  const aw=S.apps.filter(a=>a.stage==='Awarded'&&a.start&&a.end);const months=[];
+  for(let i=0;i<12;i++){const d=new Date(TODAY.getFullYear(),TODAY.getMonth()+i,1),di=iso(d);let g=0;
+    aw.forEach(a=>{const n=Math.max(1,Math.round((new Date(a.end)-new Date(a.start))/(30.44*864e5)));if(di>=a.start.slice(0,7)+'-01'&&di<=a.end)g+=gbp(a.awarded||a.amount,a.currency)/n});
+    const un=lines.filter(l=>!l.restricted).reduce((s,l)=>s+(+l.amount||0)/12,0),re=lines.filter(l=>l.restricted).reduce((s,l)=>s+(+l.amount||0)/12,0);
+    months.push({d,g,un,re,core:g*icr/(100+icr),net:un+g*icr/(100+icr)-mon})}
+  let bal=cash;months.forEach(m=>{bal+=m.net;m.bal=bal});
+  const grantsY=months.reduce((s,m)=>s+m.g,0),unY=lines.filter(l=>!l.restricted).reduce((s,l)=>s+(+l.amount||0),0),reY=lines.filter(l=>l.restricted).reduce((s,l)=>s+(+l.amount||0),0);
+  const total=grantsY+unY+reY;const funders=[...aw.map(a=>({n:a.funder||a.title,v:months.reduce((s,m)=>s,0)})),...lines.map(l=>({n:l.name,v:+l.amount||0}))];
+  const byF={};aw.forEach(a=>{const n=a.funder||a.title;byF[n]=(byF[n]||0)+gbp(a.awarded||a.amount,a.currency)});lines.forEach(l=>{byF[l.name]=(byF[l.name]||0)+(+l.amount||0)});
+  const top=Object.entries(byF).sort((a,b)=>b[1]-a[1])[0];const allF=Object.values(byF).reduce((a,b)=>a+b,0);
+  const byT={};aw.forEach(a=>{byT['Institutional grants']=(byT['Institutional grants']||0)+gbp(a.awarded||a.amount,a.currency)});lines.forEach(l=>{byT[l.type]=(byT[l.type]||0)+(+l.amount||0)});
+  return{F,cash,mon,tgt,icr,lines,months,grantsY,unY,reY,total,unShare:total?(unY+months.reduce((s,m)=>s+m.core,0))/total:0,top,topShare:top&&allF?top[1]/allF:0,byT,reserve:mon?cash/mon:0,runOut:months.find(m=>m.bal<0)}}
+function vFinance(){const c=finCalc(),F=c.F;
+  const warn=[];if(!c.mon)warn.push(['a','Enter your monthly core costs to see reserves and runway.']);
+  if(c.mon&&c.reserve<c.tgt)warn.push(['r',`Reserves cover ${c.reserve.toFixed(1)} months: below your ${c.tgt}-month target. Prioritise unrestricted income and full cost recovery.`]);
+  if(c.runOut)warn.push(['r',`On current plans cash runs out in ${c.runOut.d.toLocaleDateString(undefined,{month:'long',year:'numeric'})}. Consider a standby loan facility, advance payments from donors, or cutting core costs.`]);
+  if(c.topShare>0.4)warn.push(['a',`${esc(c.top[0])} provides ${Math.round(c.topShare*100)}% of income: high dependency. Aim for no funder above ~30–40%.`]);
+  if(c.total&&c.unShare<0.2)warn.push(['a',`Only ${Math.round(c.unShare*100)}% of income is unrestricted. Grow website donations, regular giving and legacies, and claim full indirect costs.`]);
+  const W=1000,H=220,max=Math.max(...c.months.map(m=>Math.abs(m.bal)),c.tgt*c.mon,1)*1.15,zero=c.months.some(m=>m.bal<0)?H*0.6:H-24,sc=(H-40)/max,bw=(W-60)/12;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cash forecast">`;
+  if(c.mon){const y=zero-c.tgt*c.mon*sc;svg+=`<line x1="50" x2="${W}" y1="${y}" y2="${y}" stroke="#b7791f" stroke-dasharray="4 4"/><text x="${W-4}" y="${y-4}" text-anchor="end" font-size="11" fill="#b7791f">reserve target ${short(c.tgt*c.mon)}</text>`}
+  svg+=`<line x1="50" x2="${W}" y1="${zero}" y2="${zero}" stroke="#c9d3d1"/>`;
+  c.months.forEach((m,i)=>{const h=Math.abs(m.bal)*sc,x=55+i*bw;svg+=`<rect x="${x}" y="${m.bal>=0?zero-h:zero}" width="${bw*0.7}" height="${Math.max(1,h)}" rx="3" fill="${m.bal<0?'#c9372c':m.bal<c.tgt*c.mon?'#e0a94a':'#0b6e69'}"><title>${m.d.toLocaleDateString(undefined,{month:'short',year:'numeric'})}: ${short(m.bal)}</title></rect><text x="${x+bw*0.35}" y="${H-6}" text-anchor="middle" font-size="11" fill="#7a8886">${m.d.toLocaleDateString(undefined,{month:'short'})}</text>`});
+  svg+=`<text x="4" y="14" font-size="11" fill="#7a8886">${short(max/1.15)}</text></svg>`;
+  return`<div class="head"><div><h2>Financial health</h2><p>Your reserves, 12-month cash forecast, income mix and dependency risks, so funding gaps show up months before they hurt. Awarded grants from <a href="#" data-act="go" data-v="register">Applied & awarded</a> are included automatically.</p></div></div>
+  <div class="grid g4">${[['Reserves',c.mon?c.reserve.toFixed(1)+' months':'—','target '+c.tgt+' months'],['Income next 12 months',short(c.total),'grants '+short(c.grantsY)+' · other '+short(c.unY+c.reY)],['Unrestricted share',c.total?Math.round(c.unShare*100)+'%':'—','incl. indirect cost recovery'],['Largest funder',c.top?Math.round(c.topShare*100)+'%':'—',c.top?esc(c.top[0]):'']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  ${warn.length?`<div class="card" style="margin-top:14px">${warn.map(w=>`<div style="padding:6px 0;font-size:14px"><span class="tag ${w[0]}">${w[0]==='r'?'Risk':'Watch'}</span> ${w[1]}</div>`).join('')}</div>`:''}
+  <div class="card gantt" style="margin-top:14px"><h3>12-month cash forecast (GBP, indicative)</h3>${svg}<div class="note">Green = above reserve target · amber = below target · red = overdrawn. Assumes awarded grants are spread evenly over their grant period, and that they cover their own project costs and contribute their indirect-cost rate to core costs.</div></div>
+  <div class="grid g2" style="margin-top:14px"><div class="card"><h3>Your numbers</h3>
+   <div class="grid g2" style="gap:8px"><div><label class="f">Cash in bank today (GBP)</label><input type="number" value="${esc(F.cash||'')}" data-fin="cash"></div><div><label class="f">Monthly core costs (GBP)</label><input type="number" value="${esc(F.monthly||'')}" data-fin="monthly" placeholder="HQ staff, rent, finance, IT…"></div>
+   <div><label class="f">Reserve target (months)</label><input type="number" value="${esc(F.target||6)}" data-fin="target"></div><div><label class="f">Average indirect-cost rate on grants (%)</label><input type="number" value="${esc(F.icr||7)}" data-fin="icr"></div></div>
+   <h4 style="margin-top:16px">Other income (non-grant), per year</h4>
+   ${(c.lines).map((l,i)=>`<div style="display:grid;grid-template-columns:1.3fr 1.3fr 110px 110px 30px;gap:6px;margin-top:6px;align-items:center"><input type="text" value="${esc(l.name)}" data-fl="${i}" data-k="name"><select data-fl="${i}" data-k="type">${INCOME_TYPES.map(t=>`<option ${l.type===t?'selected':''}>${t}</option>`).join('')}</select><input type="number" value="${esc(l.amount)}" data-fl="${i}" data-k="amount" placeholder="£ / year"><label class="tog"><input type="checkbox" ${l.restricted?'checked':''} data-fl="${i}" data-k="restricted"> restricted</label><button class="btn sm ghost" data-act="rmFl" data-i="${i}">✕</button></div>`).join('')}
+   <button class="btn sm" style="margin-top:8px" data-act="addFl">＋ Add income line</button></div>
+   <div class="card"><h3>Income mix</h3>${Object.keys(c.byT).length?Object.entries(c.byT).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{const t=Object.values(c.byT).reduce((a,b)=>a+b,0);return`<div style="display:grid;grid-template-columns:200px 1fr 70px;gap:8px;align-items:center;font-size:13.5px;margin:6px 0"><span>${esc(k)}</span><div class="pbar"><i style="width:${v/t*100}%"></i></div><span class="num">${short(v)}</span></div>`}).join(''):'<p class="note">Add income lines and awarded grants to see your mix.</p>'}
+   <h3 style="margin-top:18px">Sustainability checklist</h3>${SUST.map((x,i)=>`<label class="chk"><input type="checkbox" ${(S.settings.sust||{})[i]?'checked':''} data-sust="${i}"><span>${esc(x)}</span></label>`).join('')}</div></div>`}
+function vCosts(){const k=sub.cost||(sub.cost={rule:0,pct:7,own:15,lines:{'Programme staff':0,'Medicines & medical supplies':0,'Medical equipment':0,'Freight, customs & logistics':0,'Partner organisation costs':0,'Field office & support costs (direct)':0,'MEAL, audit & evaluation':0,'Other direct costs':0}});
+  const direct=Object.values(k.lines).reduce((a,b)=>a+(+b||0),0),rec=direct*k.pct/100,need=direct*k.own/100,gap=Math.max(0,need-rec);
+  return`<div class="head"><div><h2>Budget & cost recovery</h2><p>Build a grant budget that covers the true cost of delivery. Many NGOs struggle financially because grants don't pay their share of core costs.</p></div></div>
+  <div class="grid g2"><div class="card"><h3>Direct costs of the project (GBP)</h3>
+   ${Object.entries(k.lines).map(([n,v])=>`<div style="display:grid;grid-template-columns:1fr 160px;gap:8px;align-items:center;margin:6px 0;font-size:13.5px"><span>${esc(n)}</span><input type="number" value="${v||''}" data-cl="${esc(n)}"></div>`).join('')}
+   <label class="f">Donor rule for indirect costs</label><select data-cr="rule">${COST_RULES.map((r,i)=>`<option value="${i}" ${+k.rule===i?'selected':''}>${r[0]} (${r[1]}%)</option>`).join('')}</select>
+   <div class="note">${esc(COST_RULES[k.rule][2])}</div>
+   <div class="grid g2" style="gap:8px"><div><label class="f">Indirect % allowed by this donor</label><input type="number" value="${k.pct}" data-cr="pct"></div><div><label class="f">Your actual overhead rate (%)</label><input type="number" value="${k.own}" data-cr="own"></div></div></div>
+   <div class="card"><h3>Result</h3>
+   <div class="agenda"><div class="row" style="grid-template-columns:1fr auto"><span>Total direct costs</span><b>${money(direct)}</b></div>
+   <div class="row" style="grid-template-columns:1fr auto"><span>Indirect costs the donor will pay (${k.pct}%)</span><b>${money(rec)}</b></div>
+   <div class="row" style="grid-template-columns:1fr auto"><span><b>Total to request</b></span><b style="font-size:18px">${money(direct+rec)}</b></div>
+   <div class="row" style="grid-template-columns:1fr auto"><span>True overhead this project generates (${k.own}%)</span><b>${money(need)}</b></div>
+   <div class="row" style="grid-template-columns:1fr auto"><span>Gap to cover from unrestricted funds</span><b style="color:${gap?'var(--red)':'var(--brand)'}">${money(gap)}</b></div></div>
+   <h4 style="margin-top:16px">How to close the gap</h4><ul style="font-size:13.5px;padding-left:18px;line-height:1.7;margin:6px 0">
+    <li>Budget field support costs (field office, security, logistics, finance and MEAL staff time) as <b>direct</b> lines where the donor allows it, as ECHO does.</li>
+    <li>Include <b>procurement, freight, storage, customs and insurance</b> for medicines and equipment: they are often forgotten.</li>
+    <li>Charge a fair share of HQ staff time (finance, grants, safeguarding, medical oversight) as direct where eligible.</li>
+    <li>Co-fund restricted-overhead grants with funders that pay higher overheads (e.g. Horizon Europe 25%) or with unrestricted income.</li>
+    <li>Ask for <b>pre-financing / advance payments</b> rather than reimbursement to protect cash flow.</li></ul></div></div>`}
+function vInvestors(){return`<div class="head"><div><h2>Investors & social finance</h2><p>Repayable finance and investors that can bridge cash-flow gaps or grow sustainable income. Use loans for working capital or income-generating assets, never to cover a permanent deficit.</p></div></div>
+  ${INVESTORS.map(g=>`<h3 style="margin:18px 0 4px">${esc(g.g)}</h3><p class="note" style="margin:0 0 10px">${esc(g.d)}</p><div class="grid g3">${g.items.map(([n,r,amt,d,u,tip])=>{const tr=S.funders.find(z=>z.name===n);return`<div class="src"><span class="tag">${esc(r)}</span><h4>${esc(n)}</h4><div class="gs" style="font-size:13px;padding:5px 9px">💰 <b style="font-size:13.5px">${esc(amt)}</b></div><div style="font-size:13px;margin-top:6px">${esc(d)}</div>${tip?`<div class="note"><b>How to access:</b> ${esc(tip)}</div>`:''}<div style="margin-top:9px;display:flex;gap:6px"><a class="btn sm pri" href="${u}" target="_blank" rel="noopener">Go to provider ↗</a>${tr?`<button class="btn sm" data-act="editFunder" data-id="${tr.id}">Tracking: ${esc(tr.stage)}</button>`:`<button class="btn sm" data-act="trackFunder" data-n="${esc(n)}" data-t="Investor" data-u="${esc(u)}">＋ Track</button>`}</div></div>`}).join('')}</div>`).join('')}
+  <p class="note" style="margin-top:14px">Terms change: confirm current rates and eligibility with each provider. Get trustee approval and independent advice before borrowing.</p>`}
+
+// ================= dashboard =================
+function vDashboard(){const R=readiness(),act=S.apps.filter(a=>ACTIVE.includes(a.stage)),pend=S.apps.filter(a=>a.stage==='Submitted'||a.stage==='Clarifications'),aw=S.apps.filter(a=>a.stage==='Awarded');
+  const direct=S.opps.filter(o=>o.uk==='direct'&&state(o)==='open').sort((x,y)=>x.deadline.localeCompare(y.deadline));
+  const org=(S.settings.org||{}).name;
+  const fc=finCalc();
+  return`<div class="head"><div><h2>${org?esc(org)+': ':''}Dashboard</h2><p>Grants, funds, medical supplies and finances in one place.</p></div></div>
+  <div class="grid g4" style="margin-bottom:14px">${[['grants','🔎','Grants',S.opps.filter(o=>state(o)!=='closed').length+' live opportunities worldwide'],['funds','🏦','Funds & partners',S.funders.length+' funders tracked'],['medsources','💊','Medical supplies & equipment',S.supplies.filter(x=>x.status!=='Distributed').length+' items in progress · donated & low-cost sources'],['finance','💷','Finance',fc.mon?fc.reserve.toFixed(1)+' months reserves':'Set up reserves & cash forecast']].map(t=>`<button class="card kpi" style="text-align:left;cursor:pointer" data-act="go" data-v="${t[0]}"><div style="font-size:22px">${t[1]}</div><div style="font-weight:700;font-size:15px;margin-top:4px">${t[2]} →</div><div class="s">${t[3]}</div></button>`).join('')}</div>
+  <div class="grid g4">${[['In preparation',act.length,short(act.reduce((s,a)=>s+gbp(a.amount,a.currency),0))+' targeted'],['Awaiting decision',pend.length,short(pend.reduce((s,a)=>s+gbp(a.amount,a.currency),0))+' requested'],['Awarded',aw.length,short(aw.reduce((s,a)=>s+gbp(a.awarded||a.amount,a.currency),0))],['Donor readiness',R.p+'%',R.r+'/'+R.t+' documents ready']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  ${(()=>{const n=S.opps.filter(o=>state(o)!=='closed'&&!trustOK(o)).length;return n?`<div class="card" style="margin-top:14px;border-color:#bfd2ff;background:#f6f9ff;display:flex;justify-content:space-between;align-items:center"><div><b>${n} opportunit${n>1?'ies need':'y needs'} a team check</b><div class="note" style="margin:0">Added automatically or not yet confirmed on the funder's own site. Check before investing time.</div></div><button class="btn sm" data-act="chkList">Review →</button></div>`:''})()}
+  ${(()=>{const me=S.opps.filter(o=>state(o)!=='closed'&&isME(o)).sort((a,b)=>sortKey(a)-sortKey(b));return`<div class="card" style="margin-top:14px;border-color:#f3d39a"><div style="display:flex;justify-content:space-between;align-items:center"><h3>📍 Middle East focus <span class="note">· ${me.length} live opportunities</span></h3><button class="btn sm" data-act="go" data-v="mideast">Open Middle East hub →</button></div><div class="agenda">${me.slice(0,6).map(meRow).join('')}</div></div>`})()}
+  <div class="grid g2" style="margin-top:14px"><div class="card"><h3>Due in the next 14 days</h3>${agenda(events(14))}</div>
+  <div class="card"><h3>Open calls a UK charity can apply to directly</h3>${direct.length?`<div class="agenda">${direct.slice(0,8).map(o=>{const a=appFor(o.id);return`<div class="row"><b>${fmtS(o.deadline)}</b><div>${esc(o.title)}<div class="note" style="margin:0">${esc(o.funder)}</div></div>${a?`<button class="btn sm" data-act="openApp" data-id="${a.id}">Open</button>`:`<button class="btn sm pri" data-act="startApp" data-id="${esc(o.id)}">Start</button>`}</div>`}).join('')}</div>`:'<p class="note">None with a fixed deadline right now. See rolling opportunities in Find grants.</p>'}</div></div>
+  <div class="grid g4" style="margin-top:14px">
+   <div class="card"><h3>Grant pipeline</h3>${KANBAN.map(s=>{const n=S.apps.filter(a=>a.stage===s).length;return`<div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px solid var(--line)"><span>${s}</span><b>${n}</b></div>`}).join('')}</div>
+   <div class="card"><h3>Funder relationships</h3>${REL_STAGES.map(s=>`<div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px solid var(--line)"><span>${s}</span><b>${S.funders.filter(f=>f.stage===s).length}</b></div>`).join('')}<button class="btn sm" style="margin-top:10px" data-act="go" data-v="relations">Open relationships →</button></div>
+   <div class="card"><h3>Medical supplies</h3>${SUP_STATUS.map(s=>`<div style="display:flex;justify-content:space-between;font-size:13.5px;padding:4px 0;border-bottom:1px solid var(--line)"><span>${s}</span><b>${S.supplies.filter(x=>x.status===s).length}</b></div>`).join('')}<button class="btn sm" style="margin-top:10px" data-act="go" data-v="supplies">Open supplies →</button></div>
+   <div class="card"><h3>Get started</h3><ol style="padding-left:18px;margin:6px 0;font-size:13.5px;line-height:1.8"><li>Fill in your <a href="#" data-act="go" data-v="readiness">organisation profile & documents</a></li><li>Pick a grant in <a href="#" data-act="go" data-v="grants">Find grants</a> → <b>Start application</b></li><li>Work through the timeline & draft with Claude</li><li>Submit on the funder portal, set stage to <b>Submitted</b></li><li>Track decisions & reports in <a href="#" data-act="go" data-v="register">Applied & awarded</a></li></ol></div></div>`}
+
+// ================= render =================
+function render(){
+  $('#nav').innerHTML=navHTML();$('#mnav').innerHTML=VIEWS.map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[2]}</button>`).join('');
+  $('#orgTop').textContent=(S.settings.org||{}).name?S.settings.org.name+': Grants & Supplies':'Grants & Supplies';
+  const f={dashboard:vDashboard,mideast:vMideast,compliance:vCompliance,grants:vGrants,applications:vApplications,timeline:vTimeline,register:vRegister,readiness:vReadiness,supplies:()=>vSupplies('needs'),medsources:()=>vSupplies('sources'),medquality:()=>vSupplies('quality'),funds:vFunds,relations:vRelations,finance:vFinance,costs:vCosts,investors:vInvestors}[view]||vDashboard;
+  const ae=document.activeElement,keep=ae&&(ae.dataset&&(ae.dataset.sec||ae.dataset.gf==='q'||ae.dataset.gf==='wc'))?{sec:ae.dataset.sec,gf:ae.dataset.gf,pos:ae.selectionStart}:null;
+  $('#main').innerHTML=f();
+  if(keep){const el=keep.sec?document.getElementById('sec-'+keep.sec):document.querySelector(`[data-gf="${keep.gf}"]`);if(el){el.focus();try{el.setSelectionRange(keep.pos,keep.pos)}catch(e){}}}
+}
+// avoid clobbering an input the user is typing in when remote updates arrive
+let pendingRender=false;function softRender(){const ae=document.activeElement;if(ae&&['INPUT','TEXTAREA','SELECT'].includes(ae.tagName)&&$('#main').contains(ae)){pendingRender=true;return}render()}
+document.addEventListener('focusout',()=>{if(pendingRender){pendingRender=false;setTimeout(()=>{const ae=document.activeElement;if(!(ae&&['INPUT','TEXTAREA','SELECT'].includes(ae.tagName)))render();else pendingRender=true},50)}});
+
+// ================= actions =================
+const ACT={
+ go:d=>{go(d.v)},meAll:()=>{sub.g=Object.assign(sub.g||{q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',mode:'list'},{rg:'me'});go('grants')},gmode:d=>{sub.g.mode=d.m;render()},close:()=>$('#modal').classList.remove('on'),
+ startApp:async d=>{const o=findOpp(d.id);const ex=appFor(d.id);if(ex){sub.appTab='timeline';go('applications',ex.id);return}const a={id:'a'+uid(),...newApp(o)};await put('apps',a.id,a);sub.appTab='timeline';go('applications',a.id);toast('Application created with a timeline back from the deadline')},
+ blankApp:async()=>{const a={id:'a'+uid(),...newApp(null)};await put('apps',a.id,a);sub.appTab='timeline';go('applications',a.id)},
+ openApp:d=>{sub.appTab=sub.appTab||'timeline';go('applications',d.id)},
+ appTab:d=>{sub.appTab=d.t;render()},
+ delApp:async()=>{const a=findApp(detail);$('#box').innerHTML=`<h2>Delete this application?</h2><p>${esc(a.title)}. This cannot be undone. To keep a record, set the stage to <b>Withdrawn</b> instead.</p><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" data-act="close">Cancel</button><button class="btn pri" data-act="delAppYes">Delete</button></div>`;$('#modal').classList.add('on')},
+ delAppYes:async()=>{const id=detail;$('#modal').classList.remove('on');await del('apps',id);go('applications')},
+ rebuildMs:()=>{const a=findApp(detail);if(!a.deadline){toast('Set a deadline first');return}a.milestones=MILESTONES.map(([n,off])=>{const old=(a.milestones||[]).find(m=>m.name===n);const dt=addDays(a.deadline,off);return{id:old?old.id:uid(),name:n,date:dt<todayISO?todayISO:dt,done:old?old.done:false,owner:old?old.owner:''}});patchApp(a.id,{milestones:a.milestones});render()},
+ addMs:()=>{const a=findApp(detail);a.milestones=[...(a.milestones||[]),{id:uid(),name:'New milestone',date:todayISO,done:false,owner:''}];patchApp(a.id,{milestones:a.milestones});render()},
+ addCk:()=>{const v=$('#newCk').value.trim();if(!v)return;const a=findApp(detail);a.checklist=[...(a.checklist||[]),{name:v,done:false}];patchApp(a.id,{checklist:a.checklist});render()},
+ rmCk:d=>{const a=findApp(detail);a.checklist.splice(+d.i,1);patchApp(a.id,{checklist:a.checklist});render()},
+ addRp:d=>{const a=findApp(detail);a.reports=[...(a.reports||[]),{type:d.t,due:addDays(todayISO,90),done:false}];patchApp(a.id,{reports:a.reports});render()},
+ rmRp:d=>{const a=findApp(detail);a.reports.splice(+d.i,1);patchApp(a.id,{reports:a.reports});render()},
+ copyProp:()=>{const a=findApp(detail);const txt=`${a.title}\n${a.funder}\n\n`+SECTIONS.map(([k,n])=>`${n.toUpperCase()}\n${(a.sections||{})[k]||''}`).join('\n\n');navigator.clipboard.writeText(txt).then(()=>toast('Proposal copied: paste into the funder template'),()=>toast('Clipboard blocked by the browser'))},
+ draft:async(d,btn)=>{const a=findApp(detail),o=findOpp(a.oppId)||{},org=S.settings.org||{},sec=SECTIONS.find(s=>s[0]===d.k);const ta=document.getElementById('sec-'+d.k);
+  if(ta.value.trim()&&!confirm_replace(ta))return;
+  const others=SECTIONS.filter(s=>s[0]!==d.k&&(a.sections||{})[s[0]]).map(s=>`## ${s[1]}\n${a.sections[s[0]].slice(0,1200)}`).join('\n\n');
+  const prompt=`You are an experienced grant writer for a UK-registered medical & humanitarian NGO. Write the "${sec[1]}" section of a grant proposal.
+Length & content: ${sec[2]}
+Rules: plain text, short paragraphs or numbered points, no markdown headings. Write in the funder's language of results and accountability. NEVER invent statistics, numbers, names or past results: where a figure or fact is needed and not given below, write a placeholder like [insert: maternal mortality rate in district, source]. Align with humanitarian principles, Core Humanitarian Standard and safeguarding good practice.
+
+FUNDER & CALL
+Funder: ${a.funder}
+Call: ${a.title}
+Funder notes: ${[o.eligibility,o.where,o.amount,o.notes].filter(Boolean).join(' | ')}
+Amount requested: ${a.amount?a.amount+' '+a.currency:'not set'}
+
+ORGANISATION
+${JSON.stringify(org)}
+
+PROJECT BRIEF
+${JSON.stringify(a.project||{})}
+
+OTHER SECTIONS ALREADY WRITTEN (for consistency)
+${others||'none yet'}
+
+Now write only the "${sec[1]}" section.`;
+  btn.disabled=true;btn.textContent='Writing…';
+  try{const r=await sample(prompt,{modelTier:'default',cache:false,onText:({text})=>{ta.value=text}});ta.value=r.text;a.sections={...(a.sections||{}),[d.k]:r.text};patchApp(a.id,{sections:a.sections});toast('Draft ready: review and edit it')}
+  catch(e){toast(e&&e.code==='rate_limited'?'Too many requests, try again in a minute':e&&e.code==='not_granted'?'AI drafting not allowed in this view':'Drafting failed')}
+  btn.disabled=false;btn.textContent='✨ Draft with Claude'},
+ chkList:()=>{sub.g=Object.assign(sub.g||{q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',mode:'list'},{tr:'chk'});go('grants')},
+ dlCSV:async d=>{try{await dls.save({filename:d.n,data:'\ufeff'+$('#csvTxt').value});toast('Saved '+d.n)}catch(e){toast('Download cancelled or blocked: use Copy instead')}},
+ cpCSV:()=>{const t=$('#csvTxt');t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast('Copied'),()=>{try{document.execCommand('copy');toast('Copied')}catch(e){toast('Select the text and copy it')}})},
+ reviewOpp:async d=>{const o=findOpp(d.id);if(!o)return;await put('opps',o.id,{...o,review:false,reviewed:todayISO,checked:todayISO});render();toast('Marked as checked')},
+ addOpp:()=>{$('#box').innerHTML=`<h2>Add a grant you found</h2><label class="f">Title</label><input type="text" id="oT"><label class="f">Funder</label><input type="text" id="oF">
+  <div class="grid g2" style="gap:8px"><div><label class="f">Deadline (blank = rolling)</label><input type="date" id="oD"></div><div><label class="f">Funder type</label><select id="oY">${['Government','EU','UN / multilateral','Pooled fund','Foundation','Research fund','Corporate'].map(x=>`<option>${x}</option>`).join('')}</select></div>
+  <div><label class="f">Funder country</label><select id="oC">${Object.keys(FLAGS).sort().map(c=>`<option>${c}</option>`).join('')}<option>Other</option></select></div><div><label class="f">Max grant (number)</label><input type="number" id="oX" min="0"></div><div><label class="f">Currency</label><select id="oCu">${Object.keys(RATES).map(c=>`<option>${c}</option>`).join('')}</select></div><div><label class="f">Amount notes</label><input type="text" id="oA" placeholder="e.g. per year, up to 3 years"></div><div><label class="f">UK charity eligibility</label><select id="oU"><option value="direct">Apply directly</option><option value="partner">Via a partner</option><option value="check">Check</option><option value="no">Not eligible</option></select></div></div>
+  <label class="f">Where</label><input type="text" id="oW"><label class="f">Who can apply</label><input type="text" id="oE"><label class="f">Themes (comma-separated)</label><input type="text" id="oG" placeholder="Health, Humanitarian"><label class="f">Link to the funder's own call page</label><input type="url" id="oL" placeholder="https://"><p class="note">Use the funder's official page, not a listing site. Never pay a fee to apply.</p>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn" data-act="close">Cancel</button><button class="btn pri" data-act="saveOpp">Add</button></div>`;$('#modal').classList.add('on')},
+ saveOpp:async()=>{const t=$('#oT').value.trim(),u=$('#oL').value.trim();if(!t||!/^https?:\/\//.test(u)){toast('Add a title and a link starting with https://');return}
+  const id='m'+uid(),dl=$('#oD').value;const mx=+$('#oX').value||null;await put('opps',id,{title:t,funder:$('#oF').value.trim(),fc:$('#oC').value,amax:mx,acur:$('#oCu').value,aNote:$('#oA').value.trim()||(mx?'maximum per grant':'Not published'),type:$('#oY').value,deadline:dl,status:dl?'open':'rolling',amount:$('#oA').value.trim(),where:$('#oW').value.trim(),eligibility:$('#oE').value.trim(),focus:$('#oG').value.split(',').map(s=>s.trim()).filter(Boolean),intl:true,uk:$('#oU').value,url:u,source:'Added by team',checked:todayISO,added:todayISO});$('#modal').classList.remove('on');render();toast('Added for your team')},
+ addFl:()=>{const F={...(S.settings.fin||{})};F.lines=[...(F.lines||[]),{name:'New income line',type:INCOME_TYPES[0],amount:'',restricted:false}];S.settings.fin=F;put('settings','fin',F);render()},
+ rmFl:d=>{const F={...(S.settings.fin||{})};F.lines=(F.lines||[]).filter((_,i)=>i!==+d.i);S.settings.fin=F;put('settings','fin',F);render()},
+ supTab:d=>{go(d.t==='sources'?'medsources':d.t==='quality'?'medquality':'supplies')},
+ trackFunder:async d=>{const id='f'+uid();await put('funders',id,{name:d.n,type:/Trust/.test(d.t)?'Trust':d.t,stage:'Identified',url:d.u,currency:'GBP',created:todayISO});render();toast('Added to Funder relationships')},
+ newFunder:()=>funderForm(),editFunder:d=>funderForm(S.funders.find(f=>f.id===d.id)),
+ saveFunder:async d=>{const name=$('#fN').value.trim();if(!name){toast('Add the funder name');return}const id=d.id||'f'+uid();const old=S.funders.find(f=>f.id===id)||{created:todayISO};
+  await put('funders',id,{...old,name,type:$('#fT').value,stage:$('#fS').value,contact:$('#fC').value.trim(),email:$('#fE').value.trim(),ask:$('#fA').value,currency:$('#fCu').value,owner:$('#fO').value.trim(),next:$('#fX').value.trim(),nextDate:$('#fD').value,last:$('#fL').value,url:$('#fU').value.trim(),notes:$('#fNo').value,updated:todayISO});$('#modal').classList.remove('on');render();toast('Saved')},
+ delFunder:async d=>{await del('funders',d.id);$('#modal').classList.remove('on');render()},
+ addSup:()=>supForm(),editSup:d=>supForm(S.supplies.find(s=>s.id===d.id)),
+ saveSup:async d=>{const item=$('#sI').value.trim();if(!item){toast('Name the item');return}const id=d.id||'s'+uid();const old=S.supplies.find(s=>s.id===id)||{};
+  await put('supplies',id,{...old,item,cat:$('#sC').value,spec:$('#sSp').value.trim(),qty:$('#sQ').value.trim(),unit:$('#sU').value.trim(),project:$('#sP').value.trim(),needBy:$('#sN').value,source:$('#sS').value.trim(),appId:$('#sA').value,cost:$('#sCo').value,currency:$('#sCu').value,expiry:$('#sE').value,status:$('#sSt').value,updated:todayISO});$('#modal').classList.remove('on');render();toast('Saved')},
+ delSup:async d=>{await del('supplies',d.id);$('#modal').classList.remove('on');render()},
+ csv:()=>{const R=S.apps;const h=['title','funder','stage','deadline','submitted','amount','currency','awarded','decision_date','grant_start','grant_end','reference','owner'];
+  const csv=[h.join(',')].concat(R.map(a=>[a.title,a.funder,a.stage,a.deadline,a.submitted,a.amount,a.currency,a.awarded,a.decisionDate,a.start,a.end,a.ref,a.owner].map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(','))).join('\n');
+  showCSV(csv,'applications.csv',R.length+' applications')},
+ csvOpps:()=>{const h=['title','funder','funder_country','type','where','uk_eligibility','min','max','currency','amount_note','deadline','status','apply_link','call_page','checked','verified'];
+  const rows=S.opps.filter(o=>state(o)!=='closed').map(o=>[o.title,o.funder,o.fc,o.type,o.where,o.uk,o.amin,o.amax,o.acur,o.aNote,o.deadline,state(o),o.applyUrl||o.url,o.url,o.checked,o.verified]);
+  showCSV([h.join(',')].concat(rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(','))).join('\n'),'grant-opportunities.csv',rows.length+' live opportunities')}
+};
+function confirm_replace(ta){return ta.dataset.ok==='1'||(ta.dataset.ok='1',toast('This section has text: click Draft again to replace it'),false)}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;if(el.tagName==='A'||el.dataset.act==='go')e.preventDefault();const fn=ACT[el.dataset.act];if(fn)fn(el.dataset,el,e)});
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')$('#modal').classList.remove('on')});
+
+// field bindings
+document.addEventListener('input',e=>{const t=e.target;
+  if(t.dataset.gf==='q'||t.dataset.gf==='wc'){sub.g[t.dataset.gf]=t.value;clearTimeout(t._h);t._h=setTimeout(render,300)}
+  if(t.dataset.sec){const a=findApp(detail);a.sections={...(a.sections||{}),[t.dataset.sec]:t.value};patchApp(a.id,{sections:a.sections},true)}
+});
+document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
+  if(d.gf&&d.gf!=='q'&&d.gf!=='wc'){sub.g[d.gf]=t.type==='checkbox'?t.checked:t.value;render();return}
+  if(d.ff){sub.f[d.ff]=t.value;render();return}
+  if(d.fin){const F={...(S.settings.fin||{}),[d.fin]:t.value};S.settings.fin=F;put('settings','fin',F).then(()=>toast('Saved'));render();return}
+  if(d.fl!==undefined){const F={...(S.settings.fin||{})};F.lines=[...(F.lines||[])];F.lines[+d.fl]={...F.lines[+d.fl],[d.k]:t.type==='checkbox'?t.checked:t.value};S.settings.fin=F;put('settings','fin',F).then(()=>toast('Saved'));render();return}
+  if(d.cmp!==undefined){const c={...(S.settings.compliance||{}),[d.cmp]:t.checked};S.settings.compliance=c;put('settings','compliance',c);render();return}
+  if(d.sust!==undefined){const c={...(S.settings.sust||{}),[d.sust]:t.checked};S.settings.sust=c;put('settings','sust',c);return}
+  if(d.cl!==undefined){sub.cost.lines[d.cl]=+t.value||0;render();return}
+  if(d.cr){if(d.cr==='rule'){sub.cost.rule=+t.value;sub.cost.pct=COST_RULES[+t.value][1]}else sub.cost[d.cr]=+t.value||0;render();return}
+  if(d.af){const a=findApp(detail);let v=t.value;const p={[d.af]:v};if(d.af==='stage'&&v==='Submitted'&&!a.submitted)p.submitted=todayISO;if(d.af==='stage'&&v==='Awarded'&&!a.decisionDate)p.decisionDate=todayISO;patchApp(a.id,p);if(['stage','deadline','title'].includes(d.af))render();return}
+  if(d.pf){const a=findApp(detail);a.project={...(a.project||{}),[d.pf]:t.value};patchApp(a.id,{project:a.project});return}
+  if(d.ms){const a=findApp(detail);const m=a.milestones.find(x=>x.id===d.ms);m[d.k]=t.type==='checkbox'?t.checked:t.value;patchApp(a.id,{milestones:a.milestones});if(d.k!=='owner'&&d.k!=='name')render();return}
+  if(d.ck!==undefined){const a=findApp(detail);a.checklist[+d.ck].done=t.checked;patchApp(a.id,{checklist:a.checklist});return}
+  if(d.rp!==undefined){const a=findApp(detail);a.reports[+d.rp][d.k]=t.type==='checkbox'?t.checked:t.value;patchApp(a.id,{reports:a.reports});render();return}
+  if(d.org){const o={...(S.settings.org||{}),[d.org]:t.value};put('settings','org',o).then(()=>toast('Saved'));S.settings.org=o;if(d.org==='name')render();return}
+  if(d.doc){const cur={...(S.docs[d.doc]||{}),[d.k]:t.value};put('docs',d.doc,cur).then(()=>toast('Saved'));if(d.k!=='link')render();return}
+  if(d.sup){const s=S.supplies.find(x=>x.id===d.sup);put('supplies',s.id,{...s,[d.k]:t.value,updated:todayISO}).then(()=>{toast('Saved');render()});return}
+  if(d.supck!==undefined){const c={...(S.settings.supcheck||{}),[d.supck]:t.checked};S.settings.supcheck=c;put('settings','supcheck',c);return}
+});
+
+// ================= boot =================
+sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',mode:'list'};
+{const h=(location.hash||'').slice(1);if(VIEWS.some(v=>v[0]===h))view=h}
+loadLocal();render();$('#sync').textContent='Offline: changes saved in this browser only';
+(async()=>{try{const c=window.claude;if(!c||!c.use)return;
+  db=await c.use('db');
+  try{sample=await c.use('sample')}catch(e){sample=null}
+  try{dls=await c.use('downloads')}catch(e){dls=null}
+  if(!db){$('#sync').textContent='Sign in on claude.ai to share data with your team';render();return}
+  S.apps=[];S.docs={};S.supplies=[];S.settings={};S.opps=[];S.funders=[];
+  const sub1=(col,fn)=>db.collection(col).onSnapshot(s=>{fn(s);$('#sync').textContent='● Live: shared with your team';softRender()},()=>{$('#sync').textContent='Connection problem: retrying'});
+  sub1('opps',s=>{S.opps=s.docs.map(d=>({id:d.id,...d.data()}))});
+  sub1('apps',s=>{S.apps=s.docs.map(d=>({id:d.id,...JSON.parse(JSON.stringify(d.data())),...(PEND[d.id]||{})}))});
+  sub1('docs',s=>{S.docs={};s.docs.forEach(d=>S.docs[d.id]=d.data())});
+  sub1('funders',s=>{S.funders=s.docs.map(d=>({id:d.id,...d.data()}))});
+  sub1('supplies',s=>{S.supplies=s.docs.map(d=>({id:d.id,...d.data()}))});
+  sub1('settings',s=>{S.settings={};s.docs.forEach(d=>S.settings[d.id]=d.data())});
+  render();
+}catch(e){$('#sync').textContent='Offline: changes saved in this browser only'}})();
+</script>
+</body>
+</html>
