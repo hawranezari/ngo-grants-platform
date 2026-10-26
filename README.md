@@ -29,6 +29,12 @@ and the wider Middle East.
 **The team's data lives in the artifact database, not in this repository.** This repo holds the app code
 and documentation only. No secrets or personal data are stored here.
 
+## Test version (for sharing outside Claude)
+`test-site/` is a standalone copy for testers: the opportunity list is built in (snapshot), anything a tester
+enters stays in their own browser, and a **Give feedback** form sends answers to Netlify Forms.
+Deploy it by dragging `test-site/` (or the zip) onto the Netlify project's Deploys page.
+It is marked `noindex` so search engines don't list it.
+
 ## Daily update
 A Claude scheduled task runs every day at 07:33 (Europe/Copenhagen) and maintains the `opps` collection only.
 Its rules are in [`docs/daily-update-task.md`](docs/daily-update-task.md): official sources only, never invent
