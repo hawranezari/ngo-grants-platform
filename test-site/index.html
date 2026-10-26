@@ -26,8 +26,9 @@ nav .sep{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#98a
 nav .cnt{margin-left:auto;font-size:11.5px;background:var(--grey);border-radius:99px;padding:0 7px}
 main{flex:1;min-width:0;padding:24px 28px 70px}
 @media(max-width:820px){nav{display:none}main{padding:16px}}
-.mnav{display:none}
-@media(max-width:820px){.mnav{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line)}.mnav button{flex:none;border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font-size:13px}.mnav button.on{background:var(--ink);color:#fff}}
+.mnav{display:none}.mpanel{display:none}
+@media(max-width:820px){.mnav{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line)}.mnav button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;font-size:13px}.mnav button.on{background:var(--ink);color:#fff;border-color:var(--ink)}.mnav .mm{background:#0b6e69;color:#fff;border-color:#0b6e69;font-weight:600}
+.mpanel.open{display:block;background:#fff;border-bottom:1px solid var(--line);padding:6px 12px 12px}.mpanel h5{margin:10px 0 5px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#777}.mpanel .row{display:flex;flex-wrap:wrap;gap:6px}.mpanel button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 12px;font-size:13px}.mpanel button.on{background:var(--ink);color:#fff}}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .head p{margin:4px 0 0;color:var(--muted);max-width:760px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
@@ -98,7 +99,7 @@ tr.click{cursor:pointer}tr.click:hover td{background:#fafcfb}
   <span style="display:flex;gap:8px;align-items:center"><span class="sync" id="sync">Test version</span><button class="btn sm pri" data-act="go" data-v="feedback">💬 Give feedback</button></span>
 </header>
 <div style="background:#fff7e6;border-bottom:1px solid #f3d39a;padding:8px 18px;font-size:13px;color:#7a4b00"><b>Test version — early draft.</b> Funding data is a snapshot from 26 Oct 2026; anything you enter stays in your own browser only. Please try it, then tell us what's useful and what's missing via <a href="#" data-act="go" data-v="feedback">💬 Give feedback</a>.</div>
-<div class="mnav" id="mnav"></div>
+<div class="mnav" id="mnav"></div><div class="mpanel" id="mpanel"></div>
 <div class="shell">
 <nav id="nav"></nav>
 <main id="main"></main>
@@ -262,7 +263,7 @@ function patchApp(id,patch,quiet){const a=findApp(id);if(!a)return;Object.assign
 const NAV=[['',[['dashboard','📊','Dashboard']]],['Grants',[['grants','🔎','Find grants'],['mideast','📍','Middle East hub'],['applications','📝','Applications'],['timeline','🗓️','Timeline'],['register','📁','Applied & awarded']]],['Funds',[['funds','🏦','Funding sources'],['relations','🤝','Funder relationships']]],['Medical',[['supplies','💊','Supplies & equipment needs'],['medsources','🏥','Where to get supplies'],['medquality','✅','Quality & compliance']]],['Finance',[['finance','💷','Financial health'],['costs','🧮','Budget & cost recovery'],['investors','📈','Investors & social finance']]],['Organisation',[['readiness','🗂️','Organisation & documents'],['compliance','⚖️','Compliance & safety']]],['Test',[['feedback','💬','Give feedback']]]];
 const VIEWS=NAV.flatMap(g=>g[1]);
 let view='dashboard',detail=null,sub={};
-function go(v,d){view=v;detail=d||null;try{history.replaceState(null,'','#'+v)}catch(e){}render();window.scrollTo(0,0)}
+function go(v,d){const mp=document.getElementById('mpanel');if(mp)mp.classList.remove('open');view=v;detail=d||null;try{history.replaceState(null,'','#'+v)}catch(e){}render();window.scrollTo(0,0)}
 function navHTML(){const c={applications:S.apps.filter(a=>ACTIVE.includes(a.stage)).length,register:S.apps.filter(a=>!ACTIVE.includes(a.stage)&&a.stage!=='Withdrawn').length,grants:S.opps.filter(o=>state(o)!=='closed').length,relations:S.funders.filter(f=>!/Committed|Declined/.test(f.stage)).length,supplies:S.supplies.filter(x=>x.status!=='Distributed').length};
   return NAV.map(([g,L])=>(g?`<div class="sep">${g}</div>`:'')+L.map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[2]}${c[v[0]]?`<span class="cnt">${c[v[0]]}</span>`:''}</button>`).join('')).join('')}
 
@@ -733,7 +734,9 @@ function vDashboard(){const R=readiness(),act=S.apps.filter(a=>ACTIVE.includes(a
 
 // ================= render =================
 function render(){
-  $('#nav').innerHTML=navHTML();$('#mnav').innerHTML=VIEWS.map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[2]}</button>`).join('');
+  $('#nav').innerHTML=navHTML();{const cur=VIEWS.find(v=>v[0]===view)||VIEWS[0],quick=['dashboard','grants','mideast','supplies','medsources'];
+  $('#mnav').innerHTML=`<button class="mm" data-act="mtoggle">☰ All sections</button>`+VIEWS.filter(v=>quick.includes(v[0])).map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[0]==='supplies'?'Medical supplies':v[0]==='medsources'?'Where to get supplies':v[2]}</button>`).join('')+(quick.includes(view)?'':`<button class="on">${cur[1]} ${cur[2]}</button>`);
+  $('#mpanel').innerHTML=NAV.map(([g,items])=>`<h5>${g||'Home'}</h5><div class="row">${items.map(v=>`<button class="${view===v[0]?'on':''}" data-act="go" data-v="${v[0]}">${v[1]} ${v[2]}</button>`).join('')}</div>`).join('')}
   $('#orgTop').textContent=(S.settings.org||{}).name?S.settings.org.name+': Grants & Supplies':'Grants & Supplies';
   const f={dashboard:vDashboard,feedback:vFeedback,mideast:vMideast,compliance:vCompliance,grants:vGrants,applications:vApplications,timeline:vTimeline,register:vRegister,readiness:vReadiness,supplies:()=>vSupplies('needs'),medsources:()=>vSupplies('sources'),medquality:()=>vSupplies('quality'),funds:vFunds,relations:vRelations,finance:vFinance,costs:vCosts,investors:vInvestors}[view]||vDashboard;
   const ae=document.activeElement,keep=ae&&(ae.dataset&&(ae.dataset.sec||ae.dataset.gf==='q'||ae.dataset.gf==='wc'))?{sec:ae.dataset.sec,gf:ae.dataset.gf,pos:ae.selectionStart}:null;
@@ -791,6 +794,7 @@ Now write only the "${sec[1]}" section.`;
  dlCSV:async d=>{try{await dls.save({filename:d.n,data:'\ufeff'+$('#csvTxt').value});toast('Saved '+d.n)}catch(e){toast('Download cancelled or blocked: use Copy instead')}},
  cpCSV:()=>{const t=$('#csvTxt');t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast('Copied'),()=>{try{document.execCommand('copy');toast('Copied')}catch(e){toast('Select the text and copy it')}})},
  fbAgain:()=>{sub.fb={};render()},
+ mtoggle:()=>{$('#mpanel').classList.toggle('open')},
  reviewOpp:async d=>{const o=findOpp(d.id);if(!o)return;await put('opps',o.id,{...o,review:false,reviewed:todayISO,checked:todayISO});render();toast('Marked as checked')},
  addOpp:()=>{$('#box').innerHTML=`<h2>Add a grant you found</h2><label class="f">Title</label><input type="text" id="oT"><label class="f">Funder</label><input type="text" id="oF">
   <div class="grid g2" style="gap:8px"><div><label class="f">Deadline (blank = rolling)</label><input type="date" id="oD"></div><div><label class="f">Funder type</label><select id="oY">${['Government','EU','UN / multilateral','Pooled fund','Foundation','Research fund','Corporate'].map(x=>`<option>${x}</option>`).join('')}</select></div>
