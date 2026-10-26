@@ -56,6 +56,11 @@ tr.click{cursor:pointer}tr.click:hover td{background:#fafcfb}
 .tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--grey);color:var(--muted);white-space:nowrap;margin:0 3px 3px 0}
 .tag.g{background:var(--soft);color:var(--brand)}.tag.a{background:var(--amber-soft);color:var(--amber)}.tag.r{background:var(--red-soft);color:var(--red)}.tag.b{background:var(--blue-soft);color:var(--blue)}
 .pbar{height:7px;background:var(--grey);border-radius:9px;overflow:hidden}.pbar i{display:block;height:100%;background:var(--brand)}
+.fit{border-radius:9px;padding:7px 10px;margin:0 0 8px;font-size:13px;line-height:1.4}.fit b{font-size:13.5px}
+.fit.now{background:#e7f6ec;color:#14532d;border:1px solid #9fd8b2}.fit.partner{background:#eaf1fb;color:#1e3a66;border:1px solid #b9cdee}.fit.later{background:#f3f1ec;color:#5b5446;border:1px solid #e0d9c8}.fit.no{background:#fbeeee;color:#7a1f1f;border:1px solid #efc4c4}
+.opp.fnow{border-left:6px solid #2e9e5b}.opp.fpartner{border-left:6px solid #80a4d6}.opp.flater,.opp.fno{opacity:.86}
+.fchips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}.fchips button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 14px;font-weight:600;cursor:pointer}.fchips button.on{border-color:var(--ink);background:var(--ink);color:#fff}.fchips .n{opacity:.75;font-weight:500;margin-left:4px}
+.ftag{display:inline-block;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:600;margin-right:4px}.ftag.now{background:#e7f6ec;color:#14532d}.ftag.partner{background:#eaf1fb;color:#1e3a66}.ftag.later{background:#f3f1ec;color:#5b5446}.ftag.no{background:#fbeeee;color:#7a1f1f}
 .opp{display:grid;grid-template-columns:112px 1fr 200px;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:9px}
 @media(max-width:860px){.opp{grid-template-columns:1fr}}
 .dl{border-radius:11px;padding:9px;text-align:center;background:var(--grey);font-size:12px}.dl b{display:block;font-size:14px}
@@ -288,20 +293,27 @@ function grantSize(o){const c=o.acur||'GBP';
    const g=c!=='GBP'?` <span class="note">(≈ ${o.amin&&o.amax&&o.amin!==o.amax?short(gbp(o.amin,c))+' – '+short(gbp(o.amax,c)):short(gbp(o.amax||o.amin,c))})</span>`:'';
    return`<b>${r}</b>${g}${o.aNote?`<div class="note" style="margin:2px 0 0">${esc(o.aNote)}</div>`:''}`}
   return`<b>${esc(o.aNote||o.amount||'Not published')}</b>`}
-const sortKey=o=>({open:0,soon:1,rolling:2,expected:3,paused:4,closed:5}[state(o)])*1e6+(o.deadline?days(o.deadline)+5000:9e5);
+const FIT={now:['✅','Al Risaleh can apply now','Apply now'],partner:['🤝','Possible now with a partner','With a partner'],later:['⏳','Later: once you have a track record','Later'],no:['✖','Not eligible for a UK charity','Not eligible']};
+const fitOf=o=>FIT[o.fit]?o.fit:(o.uk==='no'?'no':o.uk==='partner'?'partner':'later');
+const fitRank=o=>({now:0,partner:1,later:2,no:3}[fitOf(o)]);
+const fitBox=o=>{const f=fitOf(o),d=FIT[f];return`<div class="fit ${f}">${d[0]} <b>${d[1]}</b>${o.fitNote?' · '+esc(o.fitNote):''}</div>`};
+const fitTag=o=>{const f=fitOf(o),d=FIT[f];return`<span class="ftag ${f}">${d[0]} ${d[2]}</span>`};
+const sortKey0=o=>({open:0,soon:1,rolling:2,expected:3,paused:4,closed:5}[state(o)])*1e6+(o.deadline?days(o.deadline)+5000:9e5);
+const sortKey=o=>fitRank(o)*1e8+sortKey0(o);
 
 function vGrants(){
-  const f=sub.g||(sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',mode:'list'});
+  const f=sub.g||(sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',ft:'',mode:'list'});
   const types=[...new Set(S.opps.map(o=>o.type))].sort(),themes=[...new Set(S.opps.flatMap(o=>o.focus||[]))].sort();
   let rows=S.opps.filter(o=>{const s=state(o);
     if(f.st==='live'&&s==='closed')return false;if(f.st==='open'&&s!=='open')return false;if(f.st==='rolling'&&s!=='rolling')return false;if(f.st==='soon'&&!(s==='soon'||s==='expected'))return false;
-    if(f.rg==='me'&&!isME(o))return false;if(f.tr==='ok'&&!trustOK(o))return false;if(f.tr==='chk'&&trustOK(o))return false;if(f.type&&o.type!==f.type)return false;if(f.fc&&(o.fc||'Other')!==f.fc)return false;
+    if(f.ft==='nowp'&&!['now','partner'].includes(fitOf(o)))return false;if(f.ft&&f.ft!=='nowp'&&fitOf(o)!==f.ft)return false;if(f.rg==='me'&&!isME(o))return false;if(f.tr==='ok'&&!trustOK(o))return false;if(f.tr==='chk'&&trustOK(o))return false;if(f.type&&o.type!==f.type)return false;if(f.fc&&(o.fc||'Other')!==f.fc)return false;
     if(f.sz){const g=sizeGBP(o);if(f.sz==='np'){if(g!==null)return false}else{if(g===null)return false;if(f.sz==='s'&&g>50000)return false;if(f.sz==='m'&&(g<=50000||g>500000))return false;if(f.sz==='l'&&(g<=500000||g>5000000))return false;if(f.sz==='xl'&&g<=5000000)return false}}
     if(f.wc&&!((o.where||'').toLowerCase().includes(f.wc.toLowerCase())||/global|worldwide|developing countries|LMIC|crisis countries|ODA/i.test(o.where||'')))return false;if(f.theme&&!(o.focus||[]).includes(f.theme))return false;if(f.uk&&o.uk!=='direct')return false;
     if(f.q&&!JSON.stringify([o.title,o.funder,o.where,o.eligibility,o.focus,o.notes]).toLowerCase().includes(f.q.toLowerCase()))return false;return true}).sort((a,b)=>sortKey(a)-sortKey(b));
   const latest=S.opps.map(o=>o.checked).filter(Boolean).sort().pop();
   return`<div class="head"><div><h2>Find grants</h2><p>Institutional & government funding worldwide, updated automatically every Monday${latest?' · last refresh '+fmtD(latest):''}. Each grant shows its <b>grant size</b> and an <b>Apply</b> button that goes straight to the application page or portal. Use <b>Track & prepare</b> to open a workspace with a timeline.</p></div><div style="display:flex;gap:6px"><button class="btn" data-act="csvOpps">⬇ Export</button><button class="btn" data-act="addOpp">＋ Add a grant you found</button></div></div>
   <div class="banner">Always confirm deadlines and eligibility on the funder's own page before writing.</div>
+  ${(()=>{const live=S.opps.filter(o=>state(o)!=='closed'),c=k=>live.filter(o=>fitOf(o)===k).length;return`<div class="fchips">${[['','All',live.length],['now','✅ Al Risaleh can apply now',c('now')],['partner','🤝 With a partner',c('partner')],['later','⏳ Later',c('later')],['no','✖ Not eligible',c('no')]].map(([k,l,n])=>`<button class="${(f.ft||'')===k?'on':''}" data-act="ftset" data-f="${k}">${l}<span class="n">${n}</span></button>`).join('')}</div>`})()}
   <div class="bar"><input type="text" placeholder="Search funder, country, theme…" value="${esc(f.q)}" data-gf="q">
    <select data-gf="st">${[['live','All live'],['open','Open with deadline'],['rolling','Rolling'],['soon','Opening soon / expected']].map(x=>`<option value="${x[0]}" ${f.st===x[0]?'selected':''}>${x[1]}</option>`).join('')}</select>
    <select data-gf="rg"><option value="">🌍 All regions</option><option value="me" ${f.rg==='me'?'selected':''}>📍 Middle East focus</option></select>
@@ -327,7 +339,7 @@ function timing(o){const st=state(o),n=o.deadline?days(o.deadline):null;
   return`📅 <b>Closed</b>${o.deadline?' · '+fmtD(o.deadline):''}`}
 function meRow(o){const a=appFor(o.id),st=state(o),ap=o.applyUrl||o.url;
   return`<div class="row" style="grid-template-columns:110px 1fr auto"><b style="font-size:12px">${st==='open'?'Due '+fmtS(o.deadline):st==='rolling'?'Rolling':st==='soon'?'Opens '+fmtS(o.opens):st==='expected'?'Expected':esc(st)}</b>
-   <div>${esc(o.title)}<div class="note" style="margin:0">${flag(o.fc)} ${esc(o.funder)} · 💰 ${grantSize(o)}</div><div class="note" style="margin:2px 0 0">${timing(o)}</div><div style="margin-top:3px">${ukTag(o)}</div></div>
+   <div>${esc(o.title)}<div class="note" style="margin:0">${flag(o.fc)} ${esc(o.funder)} · 💰 ${grantSize(o)}</div><div class="note" style="margin:2px 0 0">${timing(o)}</div><div style="margin-top:3px">${fitTag(o)}${ukTag(o)}</div></div>
    <div style="display:flex;flex-direction:column;gap:4px"><a class="btn sm pri" href="${esc(ap)}" target="_blank" rel="noopener">Apply ↗</a>${a?`<button class="btn sm" data-act="openApp" data-id="${a.id}">Open</button>`:`<button class="btn sm" data-act="startApp" data-id="${esc(o.id)}">＋ Track</button>`}</div></div>`}
 const CMP=[
  ['Sanctions & counter-terrorism',[
@@ -417,8 +429,8 @@ function trustTags(o){const t=[];
 const trustOK=o=>!o.review&&o.verify!=='unconfirmed';
 let dls=null;function showCSV(csv,name,label){
   $('#box').innerHTML=`<h2>Export: ${esc(label)}</h2><p class="note">Download the file (opens in Excel or Google Sheets), or copy the text below.</p><div style="display:flex;gap:8px;margin:8px 0">${dls?`<button class="btn pri" data-act="dlCSV" data-n="${name}">⬇ Download ${name}</button>`:''}<button class="btn" data-act="cpCSV">⧉ Copy</button><button class="btn" data-act="close">Close</button></div><textarea id="csvTxt" rows="10" style="width:100%;font-family:monospace;font-size:12px" readonly>${esc(csv)}</textarea>`;$('#modal').classList.add('on')}
-function oppCard(o){const a=appFor(o.id),ap=o.applyUrl||o.url;return`<article class="opp">${badge(o)}
-   <div><h3>${esc(o.title)}</h3><div class="note" style="margin-top:2px">${flag(o.fc)} ${esc(o.funder)}${isME(o)?' <span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">📍 Middle East</span>':''}</div>
+function oppCard(o){const a=appFor(o.id),ap=o.applyUrl||o.url;return`<article class="opp f${fitOf(o)}">${badge(o)}
+   <div>${fitBox(o)}<h3>${esc(o.title)}</h3><div class="note" style="margin-top:2px">${flag(o.fc)} ${esc(o.funder)}${isME(o)?' <span class="tag" style="background:#fff4e0;color:#8a5300;border-color:#f3d39a">📍 Middle East</span>':''}</div>
     <div class="gs">💰 Grant size: ${grantSize(o)}</div><div class="note" style="margin:3px 0 0">${timing(o)}${o.checked?` · <span title="Last time this entry was checked">checked ${fmtS(o.checked)}</span>`:''}</div>
     <dl class="facts"><dt>Where</dt><dd>${esc(o.where)}</dd><dt>Who can apply</dt><dd>${esc(o.eligibility)}</dd></dl>
     <div style="margin-top:7px">${ukTag(o)}<span class="tag">${esc(o.type)}</span>${(o.focus||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join('')}</div>${trustTags(o)}
@@ -688,11 +700,19 @@ function vInvestors(){return`<div class="head"><div><h2>Investors & social finan
 // ================= dashboard =================
 function vDashboard(){const R=readiness(),act=S.apps.filter(a=>ACTIVE.includes(a.stage)),pend=S.apps.filter(a=>a.stage==='Submitted'||a.stage==='Clarifications'),aw=S.apps.filter(a=>a.stage==='Awarded');
   const direct=S.opps.filter(o=>o.uk==='direct'&&state(o)==='open').sort((x,y)=>x.deadline.localeCompare(y.deadline));
-  const org=(S.settings.org||{}).name;
+  const org=(S.settings.org||{}).name||'Al Risaleh Foundation';
   const fc=finCalc();
   return`<div class="head"><div><h2>${org?esc(org)+': ':''}Dashboard</h2><p>Grants, funds, medical supplies and finances in one place.</p></div></div>
   <div class="grid g4" style="margin-bottom:14px">${[['grants','🔎','Grants',S.opps.filter(o=>state(o)!=='closed').length+' live opportunities worldwide'],['funds','🏦','Funds & partners',S.funders.length+' funders tracked'],['medsources','💊','Medical supplies & equipment',S.supplies.filter(x=>x.status!=='Distributed').length+' items in progress · donated & low-cost sources'],['finance','💷','Finance',fc.mon?fc.reserve.toFixed(1)+' months reserves':'Set up reserves & cash forecast']].map(t=>`<button class="card kpi" style="text-align:left;cursor:pointer" data-act="go" data-v="${t[0]}"><div style="font-size:22px">${t[1]}</div><div style="font-weight:700;font-size:15px;margin-top:4px">${t[2]} →</div><div class="s">${t[3]}</div></button>`).join('')}</div>
   <div class="grid g4">${[['In preparation',act.length,short(act.reduce((s,a)=>s+gbp(a.amount,a.currency),0))+' targeted'],['Awaiting decision',pend.length,short(pend.reduce((s,a)=>s+gbp(a.amount,a.currency),0))+' requested'],['Awarded',aw.length,short(aw.reduce((s,a)=>s+gbp(a.awarded||a.amount,a.currency),0))],['Donor readiness',R.p+'%',R.r+'/'+R.t+' documents ready']].map(k=>`<div class="card kpi"><div class="l">${k[0]}</div><div class="n">${k[1]}</div><div class="s">${k[2]}</div></div>`).join('')}</div>
+  ${(()=>{const live=S.opps.filter(o=>state(o)!=='closed'),now=live.filter(o=>fitOf(o)==='now').sort((a,b)=>sortKey(a)-sortKey(b)),par=live.filter(o=>fitOf(o)==='partner').length,lat=live.filter(o=>fitOf(o)==='later').length;
+   return`<div class="card" style="margin-top:14px;border:2px solid #2e9e5b;background:#f6fcf8"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><h3 style="font-size:18px">✅ Al Risaleh can apply now: ${now.length} opportunities</h3><div class="note" style="margin:2px 0 0">Open to a newly registered UK charity today. Plus <a href="#" data-act="ftset" data-f="partner">${par} with a partner</a> and <a href="#" data-act="ftset" data-f="later">${lat} for later</a>.</div></div><button class="btn pri" data-act="ftset" data-f="now">See all ${now.length} →</button></div><div class="agenda" style="margin-top:8px">${now.slice(0,8).map(meRow).join('')}</div></div>
+   <div class="card" style="margin-top:14px"><h3>🔓 Unlock more funding</h3><p class="note" style="margin:2px 0 8px">Al Risaleh was registered recently, so ${lat} larger funders want a track record first. These steps open them up:</p><ol style="margin:0 0 0 18px;line-height:1.75">
+    <li><b>This month:</b> register on the UN Partner Portal and request OCHA capacity assessments (Gaza, Lebanon, Syria, Yemen). <a href="#" data-act="go" data-v="mideast">Middle East hub →</a></li>
+    <li><b>Next 3 months:</b> complete core policies and documents (safeguarding, anti-fraud, sanctions checks, finance). <a href="#" data-act="go" data-v="readiness">Organisation & documents →</a> · <a href="#" data-act="go" data-v="compliance">Compliance →</a></li>
+    <li><b>Year 1:</b> win 3–5 small grants (UK trusts like Souter and Rhododendron, plus Big Heart and OPEC Fund) and deliver one project with a short evaluation.</li>
+    <li><b>Year 1–2:</b> work as implementing partner of a larger NGO (Irish, EU-certified or UN) to build a track record.</li>
+    <li><b>After 1st audited accounts:</b> approach FCDO, Start Network membership, Irish Aid. <b>After 3 years:</b> UK Aid Match. <b>After 5 years:</b> Hilton Prize.</li></ol></div>`})()}
   ${(()=>{const n=S.opps.filter(o=>state(o)!=='closed'&&!trustOK(o)).length;return n?`<div class="card" style="margin-top:14px;border-color:#bfd2ff;background:#f6f9ff;display:flex;justify-content:space-between;align-items:center"><div><b>${n} opportunit${n>1?'ies need':'y needs'} a team check</b><div class="note" style="margin:0">Added automatically or not yet confirmed on the funder's own site. Check before investing time.</div></div><button class="btn sm" data-act="chkList">Review →</button></div>`:''})()}
   ${(()=>{const me=S.opps.filter(o=>state(o)!=='closed'&&isME(o)).sort((a,b)=>sortKey(a)-sortKey(b));return`<div class="card" style="margin-top:14px;border-color:#f3d39a"><div style="display:flex;justify-content:space-between;align-items:center"><h3>📍 Middle East focus <span class="note">· ${me.length} live opportunities</span></h3><button class="btn sm" data-act="go" data-v="mideast">Open Middle East hub →</button></div><div class="agenda">${me.slice(0,6).map(meRow).join('')}</div></div>`})()}
   <div class="grid g2" style="margin-top:14px"><div class="card"><h3>Due in the next 14 days</h3>${agenda(events(14))}</div>
@@ -765,6 +785,7 @@ Now write only the "${sec[1]}" section.`;
  dlCSV:async d=>{try{await dls.save({filename:d.n,data:'\ufeff'+$('#csvTxt').value});toast('Saved '+d.n)}catch(e){toast('Download cancelled or blocked: use Copy instead')}},
  cpCSV:()=>{const t=$('#csvTxt');t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>toast('Copied'),()=>{try{document.execCommand('copy');toast('Copied')}catch(e){toast('Select the text and copy it')}})},
  mtoggle:()=>{$('#mpanel').classList.toggle('open')},
+ ftset:d=>{sub.g=Object.assign(sub.g||{q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',mode:'list'},{ft:d.f||''});go('grants')},
  reviewOpp:async d=>{const o=findOpp(d.id);if(!o)return;await put('opps',o.id,{...o,review:false,reviewed:todayISO,checked:todayISO});render();toast('Marked as checked')},
  addOpp:()=>{$('#box').innerHTML=`<h2>Add a grant you found</h2><label class="f">Title</label><input type="text" id="oT"><label class="f">Funder</label><input type="text" id="oF">
   <div class="grid g2" style="gap:8px"><div><label class="f">Deadline (blank = rolling)</label><input type="date" id="oD"></div><div><label class="f">Funder type</label><select id="oY">${['Government','EU','UN / multilateral','Pooled fund','Foundation','Research fund','Corporate'].map(x=>`<option>${x}</option>`).join('')}</select></div>
@@ -822,7 +843,7 @@ document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
 });
 
 // ================= boot =================
-sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',mode:'list'};
+sub.g={q:'',type:'',theme:'',uk:false,st:'live',fc:'',sz:'',wc:'',rg:'',tr:'',ft:'',mode:'list'};
 {const h=(location.hash||'').slice(1);if(VIEWS.some(v=>v[0]===h))view=h}
 loadLocal();render();$('#sync').textContent='Offline: changes saved in this browser only';
 (async()=>{try{const c=window.claude;if(!c||!c.use)return;
