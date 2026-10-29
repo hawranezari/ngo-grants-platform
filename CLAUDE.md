@@ -13,6 +13,11 @@ The owner wants every session to use as few tokens as possible. Always:
 - **Keep replies short**: what changed, and the link. No step recaps.
 - **Verify cheaply**: a headless browser check of the one section changed, not a full tour with many screenshots.
 
+## Scope: this repository is ONLY the Al Risaleh grants platform (owner's standing instruction)
+- Work here only on the Al Risaleh Foundation grants & supplies platform (artifact `431d9199-…`, `test-site/`, the "Daily grant finder update" task).
+- **Never** bring in, mention, document or change the owner's other product (Kinora / Recovery Intelligence, repo `recovery-intelligence`) from a session about this project. If a request seems to be about Kinora (patients, wounds, X-rays/DICOM, rehab, WhatsApp check-ins), stop and ask which project it is for.
+- Keep commands, files, commits and scheduled tasks for the two projects completely separate.
+
 ## Project facts (so you don't need to rediscover them)
 - Artifact slug: `431d9199-d1e2-431d-b6a8-57e3a83f8c50` (publish `index.html` with publish_files).
 - `test-site/` is the standalone Netlify version (no artifact runtime).
