@@ -24,6 +24,11 @@ Schedule: every day 07:33 Europe/Copenhagen. Scope: `opps` collection only.
 - `p_homes` Gaza homes: shelter, winter kits, repairs to damaged homes in Gaza (UNDP, oPt Humanitarian Fund, Gulf charities, UK trusts).
 Set `prog` (array of these ids) on every new opportunity; the platform also guesses it from keywords.
 
+## Regulator check (owner's rule: never list a funder under investigation)
+- Before adding any UK/Scottish charity funder, check its Charity Commission (or OSCR) entry. If it shows a regulatory alert, an open statutory inquiry, or reporting overdue, do NOT add it.
+- On Mondays re-check every listed charity funder; if one now has an alert or inquiry, delete it from `opps`.
+- Removed so far: The Allen Trust (1146388), statutory inquiry opened 2026.
+
 ## Search order
 1. Gaza/Palestine, Lebanon, Iraq (OCHA pooled funds, ECHO, EU Delegations, Irish Aid, FCDO, embassy grants, UN agencies, Taawon, Arab Fund, OPEC Fund)
 2. Other Middle East & Gulf/Arab funders
