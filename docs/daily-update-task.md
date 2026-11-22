@@ -24,6 +24,11 @@ Schedule: every day 07:33 Europe/Copenhagen. Scope: `opps` collection only.
 - `p_homes` Gaza homes: shelter, winter kits, repairs to damaged homes in Gaza (UNDP, oPt Humanitarian Fund, Gulf charities, UK trusts).
 Set `prog` (array of these ids) on every new opportunity; the platform also guesses it from keywords.
 
+## Scope (owner's rule: don't waste the team's time)
+- Only add grants that can fund work in Gaza/Palestine, Jordan, Lebanon or Iraq (Al Risaleh's registered areas of operation), or UK trusts/bodies that fund UK charities overseas without restricting countries.
+- Skip grants limited to other countries (e.g. Sudan, Syria, Yemen, Ethiopia, Tanzania), research/innovation competitions, prizes, and funds open only to Danish/German/Swedish/Swiss/Japanese/EU-registered NGOs.
+- The platform also hides out-of-scope grants (`inScope` + `OUT_IDS` in index.html); delete any such `opps` documents you find.
+
 ## Regulator check (owner's rule: never list a funder under investigation)
 - Before adding any UK/Scottish charity funder, check its Charity Commission (or OSCR) entry. If it shows a regulatory alert, an open statutory inquiry, or reporting overdue, do NOT add it.
 - On Mondays re-check every listed charity funder; if one now has an alert or inquiry, delete it from `opps`.
