@@ -20,5 +20,5 @@ The owner wants every session to use as few tokens as possible. Always:
 
 ## Project facts (so you don't need to rediscover them)
 - Artifact slug: `431d9199-d1e2-431d-b6a8-57e3a83f8c50` (publish `index.html` with publish_files).
-- `test-site/` is the standalone Netlify version (no artifact runtime).
+- `test-site/` is the standalone version (no artifact runtime). Public test link: https://hawranezari.github.io/ngo-grants-platform/ — served from the `gh-pages` branch; after changing test-site/index.html, copy it to gh-pages and push.
 - Daily scheduled task "Daily grant finder update" edits only the `opps` collection; its rules are in `docs/daily-update-task.md`.
